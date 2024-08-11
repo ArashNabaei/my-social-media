@@ -11,5 +11,9 @@ namespace Domain.Entities
 
         public DateTime CreationTime { get; set; }
 
+        public int LikesCount { get; set; }
+
+        public int CommentsCount { get; set; }
+
     }
 }
