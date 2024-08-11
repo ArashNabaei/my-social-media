@@ -1,77 +1,184 @@
-﻿using Domain.Repositories;
+﻿using Dapper;
+using Domain.Repositories;
 
 namespace Infrastructure.Repositories
 {
     public class ProfileRepository : IProfileRepository
     {
-        public Task<string> GetBio(int id)
+
+        private readonly DapperContext _dapperContext;
+
+        public ProfileRepository(DapperContext dapperContext)
         {
-            throw new NotImplementedException();
+            _dapperContext = dapperContext;
         }
 
-        public Task<string> GetDateOfBirth(int id)
+        public async Task<string> GetBio(int id)
         {
-            throw new NotImplementedException();
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+
+            var query = "SELECT Bio FROM Users WHERE Id = @id";
+
+            var bio = await _dapperContext.Connection.QueryFirstAsync(query, parameters);
+
+            return bio;
         }
 
-        public Task<string> GetEmail(int id)
+        public async Task<string> GetDateOfBirth(int id)
         {
-            throw new NotImplementedException();
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+
+            var query = "SELECT DateOfBirth FROM Users WHERE Id = @id";
+
+            var dateOfBirth = await _dapperContext.Connection.QueryFirstAsync(query, parameters);
+
+            return dateOfBirth;
         }
 
-        public Task<string> GetFirstName(int id)
+        public async Task<string> GetEmail(int id)
         {
-            throw new NotImplementedException();
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+
+            var query = "SELECT Email FROM Users WHERE Id = @id";
+
+            var email = await _dapperContext.Connection.QueryFirstAsync(query, parameters);
+
+            return email;
         }
 
-        public Task<string> GetImageUrl(int id)
+        public async Task<string> GetFirstName(int id)
         {
-            throw new NotImplementedException();
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+
+            var query = "SELECT FirstName FROM Users WHERE Id = @id";
+
+            var firstName = await _dapperContext.Connection.QueryFirstAsync(query, parameters);
+
+            return firstName;
         }
 
-        public Task<string> GetLastName(int id)
+        public async Task<string> GetImageUrl(int id)
         {
-            throw new NotImplementedException();
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+
+            var query = "SELECT ImageUrl FROM Users WHERE Id = @id";
+
+            var imageUrl = await _dapperContext.Connection.QueryFirstAsync(query, parameters);
+
+            return imageUrl;
         }
 
-        public Task<string> GetPhoneNumber(int id)
+        public async Task<string> GetLastName(int id)
         {
-            throw new NotImplementedException();
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+
+            var query = "SELECT LastName FROM Users WHERE Id = @id";
+
+            var lastName = await _dapperContext.Connection.QueryFirstAsync(query, parameters);
+
+            return lastName;
         }
 
-        public Task UpdateBio(int id, string bio)
+        public async Task<string> GetPhoneNumber(int id)
         {
-            throw new NotImplementedException();
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+
+            var query = "SELECT PhoneNumber FROM Users WHERE Id = @id";
+
+            var phoneNumber = await _dapperContext.Connection.QueryFirstAsync(query, parameters);
+
+            return phoneNumber;
         }
 
-        public Task UpdateDateOfBirth(int id, DateTime dateOfBirth)
+        public async Task UpdateBio(int id, string bio)
         {
-            throw new NotImplementedException();
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+            parameters.Add("bio", bio);
+
+            var query = "Update Users SET Bio = @bio WHERE Id = @id";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+
         }
 
-        public Task UpdateEmail(int id, string email)
+        public async Task UpdateDateOfBirth(int id, DateTime dateOfBirth)
         {
-            throw new NotImplementedException();
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+            parameters.Add("dateOfBirth", dateOfBirth);
+
+            var query = "Update Users SET DateOfBirth = @dateOfBirth WHERE Id = @id";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+
         }
 
-        public Task UpdateFirstName(int id, string firstName)
+        public async Task UpdateEmail(int id, string email)
         {
-            throw new NotImplementedException();
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+            parameters.Add("email", email);
+
+            var query = "Update Users SET Email = @email WHERE Id = @id";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+
         }
 
-        public Task UpdateImageUrl(int id, string imageUrl)
+        public async Task UpdateFirstName(int id, string firstName)
         {
-            throw new NotImplementedException();
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+            parameters.Add("firstName", firstName);
+
+            var query = "Update Users SET FirstName = @firstName WHERE Id = @id";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+
         }
 
-        public Task UpdateLastName(int id, string lastName)
+        public async Task UpdateImageUrl(int id, string imageUrl)
         {
-            throw new NotImplementedException();
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+            parameters.Add("imageUrl", imageUrl);
+
+            var query = "Update Users SET ImageUrl = @imageUrl WHERE Id = @id";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+
         }
 
-        public Task UpdatePhoneNumber(int id, int phoneNumber)
+        public async Task UpdateLastName(int id, string lastName)
         {
-            throw new NotImplementedException();
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+            parameters.Add("lastName", lastName);
+
+            var query = "Update Users SET LastName = @lastName WHERE Id = @id";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+
+        }
+
+        public async Task UpdatePhoneNumber(int id, int phoneNumber)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+            parameters.Add("phoneNumber", phoneNumber);
+
+            var query = "Update Users SET PhoneNumber = @phoneNumber WHERE Id = @id";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+
         }
     }
 }
