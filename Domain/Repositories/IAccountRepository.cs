@@ -6,6 +6,6 @@ namespace Domain.Repositories
     {
         Task<string> GenerateToekn();
 
-        Task<ApplicationUser> GetAllUsers();
+        Task<IEnumerable<ApplicationUser>> GetAllUsers();
     }
 }
