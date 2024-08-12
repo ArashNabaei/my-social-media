@@ -13,7 +13,6 @@ namespace Infrastructure.Repositories
             _dapperContext = dapperContext;
         }
 
-
         public async Task<IEnumerable<User>> GetAllUsers()
         {
             var query = "SELECT * FROM Users";
@@ -22,5 +21,19 @@ namespace Infrastructure.Repositories
 
             return users;
         }
+
+        public async Task CreateUser(string username, string password)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("username", username);
+            parameters.Add("password", password);
+
+            var query = "INSERT INTO Users (Username, Password) VALUES (@username, @password)";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+
+            _dapperContext.Dispose();
+        }
+
     }
 }

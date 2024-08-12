@@ -4,10 +4,8 @@ namespace Domain.Repositories
 {
     public interface IAccountRepository
     {
-        Task<string> GenerateToekn();
-
         Task<IEnumerable<User>> GetAllUsers();
 
-        Task CreateUser(User user);
+        Task CreateUser(string username, string password);
     }
 }
