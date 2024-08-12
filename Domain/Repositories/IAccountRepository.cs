@@ -7,5 +7,7 @@ namespace Domain.Repositories
         Task<string> GenerateToekn();
 
         Task<IEnumerable<User>> GetAllUsers();
+
+        Task CreateUser(User user);
     }
 }
