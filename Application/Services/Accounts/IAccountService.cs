@@ -8,6 +8,6 @@ namespace Application.Services.Accounts
 
         Task<IEnumerable<User>> GetAllUsers();
 
-        Task CreateUser(UserDto user);
+        Task CreateUser(UserDto userDto);
     }
 }
