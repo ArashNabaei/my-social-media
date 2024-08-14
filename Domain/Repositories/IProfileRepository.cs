@@ -15,7 +15,7 @@ namespace Domain.Repositories
 
         Task<string> GetImageUrl(int id);
 
-        Task<string> GetDateOfBirth(int id);
+        Task<DateTime> GetDateOfBirth(int id);
 
         Task UpdateFirstName(int id, string firstName);
 
@@ -25,7 +25,7 @@ namespace Domain.Repositories
 
         Task UpdateEmail(int id, string email);
 
-        Task UpdatePhoneNumber(int id, int phoneNumber);
+        Task UpdatePhoneNumber(int id, string phoneNumber);
 
         Task UpdateImageUrl(int id, string imageUrl);
 

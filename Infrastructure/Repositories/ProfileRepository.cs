@@ -27,7 +27,7 @@ namespace Infrastructure.Repositories
             return bio;
         }
 
-        public async Task<string> GetDateOfBirth(int id)
+        public async Task<DateTime> GetDateOfBirth(int id)
         {
             var parameters = new DynamicParameters();
             parameters.Add("id", id);
@@ -189,7 +189,7 @@ namespace Infrastructure.Repositories
             _dapperContext.Dispose();
         }
 
-        public async Task UpdatePhoneNumber(int id, int phoneNumber)
+        public async Task UpdatePhoneNumber(int id, string phoneNumber)
         {
             var parameters = new DynamicParameters();
             parameters.Add("id", id);
