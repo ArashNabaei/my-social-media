@@ -9,5 +9,7 @@ namespace Application.Services.Accounts
         Task<IEnumerable<User>> GetAllUsers();
 
         Task CreateUser(UserDto userDto);
+
+        string GenerateToken(string username);
     }
 }
