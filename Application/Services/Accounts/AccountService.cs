@@ -30,16 +30,17 @@ namespace Application.Services.Accounts
             await _accountRepository.CreateUser(username, password);
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers()
+        public async Task<IEnumerable<UserDto>> GetAllUsers()
         {
             var users = await _accountRepository.GetAllUsers();
 
-            var result = users.Select(user => new User
+            var result = users.Select(user => new UserDto
             {
                 Id = user.Id,
                 Username = user.Username,
                 Password = user.Password
             });
+
             return result;
         }
 
