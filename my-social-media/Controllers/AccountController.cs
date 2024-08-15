@@ -20,25 +20,22 @@ namespace my_social_media.Controllers
         [HttpPost("signup")]
         public async Task<IActionResult> SignUp(UserDto user)
         {
-            if (users.Any(u => u.Username == user.Username))
-                return BadRequest("User already exists.");
-
             await _accountService.CreateUser(user);
-            
-            return Ok(user);
+
+            return Ok("User registered successfully.");
         }
 
         [HttpPost("signin")]
         public async Task<IActionResult> SignIn(UserDto userDto)
         {
-            var user = users.SingleOrDefault(u => u.Username == userDto.Username && u.Password == userDto.Password);
-            
-            if (user == null)
-                return Unauthorized();
+            var isValidUser = await _accountService.ValidateUser(userDto.Username, userDto.Password);
 
-            var generatedToken = await _accountService.GenerateToken(user.Username);
+            if (!isValidUser)
+                return Unauthorized("Invalid username or password.");
 
-            return Ok(new { token = generatedToken });
+            var token = _accountService.GenerateToken(userDto.Username);
+
+            return Ok(new { token });
         }
 
     }
