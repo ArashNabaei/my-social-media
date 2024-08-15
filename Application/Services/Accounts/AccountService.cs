@@ -26,6 +26,11 @@ namespace Application.Services.Accounts
             var username = userDto.Username;
             var password = userDto.Password;
 
+            var existingUser = await _accountRepository.GetUserByUsername(username);
+            
+            if (existingUser != null)
+                throw new InvalidOperationException("User already exists.");
+
             await _accountRepository.CreateUser(username, password);
         }
 
