@@ -1,5 +1,4 @@
 ﻿using Application.Dtos;
-using Domain.Entities;
 
 namespace Application.Services.Accounts
 {
@@ -11,5 +10,7 @@ namespace Application.Services.Accounts
         Task CreateUser(UserDto userDto);
 
         string GenerateToken(string username);
+
+        Task<bool> ValidateUser(string username, string password);
     }
 }

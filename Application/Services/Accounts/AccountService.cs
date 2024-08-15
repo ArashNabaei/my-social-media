@@ -63,5 +63,14 @@ namespace Application.Services.Accounts
             return tokenHandler.WriteToken(token);
         }
 
+        public async Task<bool> ValidateUser(string username, string password)
+        {
+            var user = await _accountRepository.GetUserByUsername(username);
+            if (user == null) 
+                return false;
+
+            return user.Password == password;
+        }
+
     }
 }
