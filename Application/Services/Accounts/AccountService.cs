@@ -1,5 +1,4 @@
 ﻿using Application.Dtos;
-using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
