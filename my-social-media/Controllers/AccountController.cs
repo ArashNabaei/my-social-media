@@ -1,6 +1,5 @@
 ﻿using Application.Dtos;
 using Application.Services.Accounts;
-using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace my_social_media.Controllers
@@ -10,6 +9,7 @@ namespace my_social_media.Controllers
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
+
         private readonly IAccountService _accountService;
 
         public AccountController(IAccountService accountService)
