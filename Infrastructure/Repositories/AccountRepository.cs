@@ -35,5 +35,16 @@ namespace Infrastructure.Repositories
             _dapperContext.Dispose();
         }
 
+        public async Task<User> GetUserByUsername(string username)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("username", username);
+
+            var query = "SELECT * FROM Users WHERE Username = @username";
+
+            var user = await _dapperContext.Connection.QueryFirstAsync<User>(query, parameters);
+
+            return user;
+        }
     }
 }

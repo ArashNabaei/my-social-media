@@ -7,5 +7,7 @@ namespace Domain.Repositories
         Task<IEnumerable<User>> GetAllUsers();
 
         Task CreateUser(string username, string password);
+
+        Task<User> GetUserByUsername(string username);
     }
 }
