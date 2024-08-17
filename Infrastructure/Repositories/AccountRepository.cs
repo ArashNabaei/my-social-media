@@ -43,7 +43,7 @@ namespace Infrastructure.Repositories
 
             var query = "SELECT * FROM Users WHERE Username = @username AND Password = @password";
 
-            var user = await _dapperContext.Connection.QueryFirstAsync<User>(query, parameters);
+            var user = await _dapperContext.Connection.QueryFirstOrDefaultAsync<User>(query, parameters);
 
             return user;
         }
