@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
 
             var query = "SELECT Bio FROM Users WHERE Id = @id";
 
-            var bio = await _dapperContext.Connection.QueryFirstAsync(query, parameters);
+            var bio = await _dapperContext.Connection.QueryFirstAsync<string>(query, parameters);
 
             _dapperContext.Dispose();
 
@@ -34,7 +34,7 @@ namespace Infrastructure.Repositories
 
             var query = "SELECT DateOfBirth FROM Users WHERE Id = @id";
 
-            var dateOfBirth = await _dapperContext.Connection.QueryFirstAsync(query, parameters);
+            var dateOfBirth = await _dapperContext.Connection.QueryFirstAsync<DateTime>(query, parameters);
 
             _dapperContext.Dispose();
 
@@ -48,7 +48,7 @@ namespace Infrastructure.Repositories
 
             var query = "SELECT Email FROM Users WHERE Id = @id";
 
-            var email = await _dapperContext.Connection.QueryFirstAsync(query, parameters);
+            var email = await _dapperContext.Connection.QueryFirstAsync<string>(query, parameters);
 
             _dapperContext.Dispose();
 
@@ -62,7 +62,7 @@ namespace Infrastructure.Repositories
 
             var query = "SELECT FirstName FROM Users WHERE Id = @id";
 
-            var firstName = await _dapperContext.Connection.QueryFirstAsync(query, parameters);
+            var firstName = await _dapperContext.Connection.QueryFirstAsync<string>(query, parameters);
 
             _dapperContext.Dispose();
 
@@ -76,7 +76,7 @@ namespace Infrastructure.Repositories
 
             var query = "SELECT ImageUrl FROM Users WHERE Id = @id";
 
-            var imageUrl = await _dapperContext.Connection.QueryFirstAsync(query, parameters);
+            var imageUrl = await _dapperContext.Connection.QueryFirstAsync<string>(query, parameters);
 
             _dapperContext.Dispose();
 
@@ -90,7 +90,7 @@ namespace Infrastructure.Repositories
 
             var query = "SELECT LastName FROM Users WHERE Id = @id";
 
-            var lastName = await _dapperContext.Connection.QueryFirstAsync(query, parameters);
+            var lastName = await _dapperContext.Connection.QueryFirstAsync<string>(query, parameters);
 
             _dapperContext.Dispose();
 
@@ -104,7 +104,7 @@ namespace Infrastructure.Repositories
 
             var query = "SELECT PhoneNumber FROM Users WHERE Id = @id";
 
-            var phoneNumber = await _dapperContext.Connection.QueryFirstAsync(query, parameters);
+            var phoneNumber = await _dapperContext.Connection.QueryFirstAsync<string>(query, parameters);
 
             _dapperContext.Dispose();
 
