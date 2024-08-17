@@ -35,12 +35,13 @@ namespace Infrastructure.Repositories
             _dapperContext.Dispose();
         }
 
-        public async Task<User> GetUserByUsername(string username)
+        public async Task<User> GetUserByUsernameAndPassword(string username, string password)
         {
             var parameters = new DynamicParameters();
             parameters.Add("username", username);
+            parameters.Add("password", password);
 
-            var query = "SELECT * FROM Users WHERE Username = @username";
+            var query = "SELECT * FROM Users WHERE Username = @username AND Password = @password";
 
             var user = await _dapperContext.Connection.QueryFirstAsync<User>(query, parameters);
 
