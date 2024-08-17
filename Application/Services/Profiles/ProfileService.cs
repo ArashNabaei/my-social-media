@@ -58,7 +58,7 @@ namespace Application.Services.Profiles
 
         public async Task<string> GetPhoneNumber(int id)
         {
-            var phoneNumber = await _profileRepository.GetImageUrl(id);
+            var phoneNumber = await _profileRepository.GetPhoneNumber(id);
 
             return phoneNumber;
         }
