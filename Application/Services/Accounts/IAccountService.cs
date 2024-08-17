@@ -9,7 +9,7 @@ namespace Application.Services.Accounts
 
         Task CreateUser(UserDto userDto);
 
-        string GenerateToken(string username);
+        string GenerateToken(int userId);
 
         Task<int?> ValidateUser(string username, string password);
     }

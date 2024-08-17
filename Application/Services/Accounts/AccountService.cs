@@ -47,16 +47,16 @@ namespace Application.Services.Accounts
             return result;
         }
 
-        public string GenerateToken(string username)
+        public string GenerateToken(int userId)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("Jwt:Key"));
-            
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-            new Claim(ClaimTypes.Name, username)
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString())
                 }),
                 NotBefore = DateTime.UtcNow,
                 Expires = DateTime.UtcNow.AddMinutes(_configuration.GetValue<double>("Jwt:ExpiryMinutes")),
