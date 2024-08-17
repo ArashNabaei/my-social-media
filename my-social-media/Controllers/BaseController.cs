@@ -8,9 +8,23 @@ namespace my_social_media.Controllers
     {
         protected int GetUserIdFromClaims()
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            return int.Parse(userId);
+            if (int.TryParse(userIdClaim, out int userId))
+            {
+                return userId;
+            }
+
+            throw new UnauthorizedAccessException("User ID not found in claims.");
+        }
+
+        protected void SetAuthorizationHeader()
+        {
+            if (Request.Headers.ContainsKey("Authorization"))
+            {
+                var token = Request.Headers["Authorization"].ToString();
+                HttpContext.Request.Headers["Authorization"] = token;
+            }
         }
     }
 }
