@@ -30,6 +30,5 @@ namespace my_social_media.Controllers
             return Ok(new { LastName = lastName });
         }
 
-        // Other APIs can also use UserId directly
     }
 }
