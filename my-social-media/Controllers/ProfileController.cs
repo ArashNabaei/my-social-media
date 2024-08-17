@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace my_social_media.Controllers
 {
-    [Authorize]
+    [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ProfileController : BaseController
     {
         private readonly IProfileService _profileService;
@@ -18,22 +19,17 @@ namespace my_social_media.Controllers
         [HttpGet("FirstName")]
         public async Task<IActionResult> GetFirstName()
         {
-            var userId = GetUserIdFromClaims();
-
-            var firstName = await _profileService.GetFirstName(userId);
-
-            return Ok(firstName);
+            var firstName = await _profileService.GetFirstName(UserId);
+            return Ok(new { FirstName = firstName });
         }
 
         [HttpGet("LastName")]
         public async Task<IActionResult> GetLastName()
         {
-            var userId = GetUserIdFromClaims();
-
-            var lastName = await _profileService.GetLastName(userId);
-
-            return Ok(lastName);
+            var lastName = await _profileService.GetLastName(UserId);
+            return Ok(new { LastName = lastName });
         }
 
+        // Other APIs can also use UserId directly
     }
 }
