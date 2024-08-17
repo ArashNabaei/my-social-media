@@ -40,7 +40,6 @@ namespace Application.Services.Accounts
 
             var result = users.Select(user => new UserDto
             {
-                Id = user.Id,
                 Username = user.Username,
                 Password = user.Password
             });
