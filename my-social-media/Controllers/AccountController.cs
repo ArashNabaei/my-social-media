@@ -28,12 +28,12 @@ namespace my_social_media.Controllers
         [HttpPost("signin")]
         public async Task<IActionResult> SignIn(UserDto userDto)
         {
-            var isValidUser = await _accountService.ValidateUser(userDto.Username, userDto.Password);
+            var userId = await _accountService.ValidateUser(userDto.Username, userDto.Password);
 
-            if (!isValidUser)
+            if (userId == null)
                 return Unauthorized("Invalid username or password.");
 
-            var token = _accountService.GenerateToken(userDto.Username);
+            var token = _accountService.GenerateToken(userId.Value);
 
             return Ok(new { token });
         }
