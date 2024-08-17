@@ -89,6 +89,11 @@ namespace Application.Services.Profiles
             await _profileRepository.UpdateImageUrl(id, imageUrl);
         }
 
+        public async Task UpdateLastName(int id, string lastName)
+        {
+            await _profileRepository.UpdateLastName(id, lastName);
+        }
+
         public async Task UpdatePhoneNumber(int id, string phoneNumber)
         {
             await _profileRepository.UpdatePhoneNumber(id, phoneNumber);

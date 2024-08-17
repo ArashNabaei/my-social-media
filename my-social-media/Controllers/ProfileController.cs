@@ -65,5 +65,53 @@ namespace my_social_media.Controllers
             return Ok(new { DateOfBirth = dateOfBirth });
         }
 
+        [HttpPut("FirstName")]
+        public async Task<IActionResult> UpdateFirstName(string firstName)
+        {
+            await _profileService.UpdateFirstName(UserId, firstName);
+
+            return Ok();
+        }
+
+        [HttpPut("LastName")]
+        public async Task<IActionResult> UpdateLastName(string lastName)
+        {
+            await _profileService.UpdateLastName(UserId, lastName);
+
+            return Ok();
+        }
+
+        [HttpPut("Bio")]
+        public async Task<IActionResult> UpdateBio(string bio)
+        {
+            await _profileService.UpdateBio(UserId, bio);
+
+            return Ok();
+        }
+
+        [HttpPut("ImageUrl")]
+        public async Task<IActionResult> UpdateImageUrl(string imageUrl)
+        {
+            await _profileService.UpdateImageUrl(UserId, imageUrl);
+
+            return Ok();
+        }
+
+        [HttpPut("PhoneNumber")]
+        public async Task<IActionResult> UpdatePhoneNumber(string phoneNumber)
+        {
+            await _profileService.UpdatePhoneNumber(UserId, phoneNumber);
+
+            return Ok();
+        }
+
+        [HttpPut("DateOfBirth")]
+        public async Task<IActionResult> UpdateDateOfBirth(DateTime dateOfBirth)
+        {
+            await _profileService.UpdateDateOfBirth(UserId, dateOfBirth);
+
+            return Ok();
+        }
+
     }
 }

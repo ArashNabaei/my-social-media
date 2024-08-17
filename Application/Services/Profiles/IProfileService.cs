@@ -30,5 +30,7 @@ namespace Application.Services.Profiles
 
         Task UpdatePhoneNumber(int id, string phoneNumber);
 
+        Task UpdateLastName(int id, string lastName);
+
     }
 }
