@@ -26,7 +26,7 @@ namespace Application.Services.Accounts
             var username = userDto.Username;
             var password = userDto.Password;
 
-            var existingUser = await _accountRepository.GetUserByUsername(username);
+            var existingUser = await _accountRepository.GetUserByUsernameAndPassword(username, password);
             
             if (existingUser != null)
                 throw new InvalidOperationException("User already exists.");
@@ -67,13 +67,11 @@ namespace Application.Services.Accounts
             return tokenHandler.WriteToken(token);
         }
 
-        public async Task<bool> ValidateUser(string username, string password)
+        public async Task<int?> ValidateUser(string username, string password)
         {
-            var user = await _accountRepository.GetUserByUsername(username);
-            if (user == null) 
-                return false;
-
-            return user.Password == password;
+            var user = await _accountRepository.GetUserByUsernameAndPassword(username, password);
+            
+            return user?.Id;
         }
 
     }

@@ -11,6 +11,6 @@ namespace Application.Services.Accounts
 
         string GenerateToken(string username);
 
-        Task<bool> ValidateUser(string username, string password);
+        Task<int?> ValidateUser(string username, string password);
     }
 }
