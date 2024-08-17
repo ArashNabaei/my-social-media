@@ -1,17 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace my_social_media.Controllers
 {
     [ApiController]
     public abstract class BaseController : ControllerBase
     {
-        protected void SetAuthorizationHeader()
+        protected int GetUserIdFromClaims()
         {
-            if (Request.Headers.ContainsKey("Authorization"))
-            {
-                var token = Request.Headers["Authorization"].ToString();
-                HttpContext.Request.Headers["Authorization"] = token;
-            }
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            return int.Parse(userId);
         }
     }
 }
