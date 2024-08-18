@@ -2,6 +2,7 @@
 using Domain.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Shared.Exceptions.Accounts;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -27,9 +28,9 @@ namespace Application.Services.Accounts
             var password = userDto.Password;
 
             var existingUser = await _accountRepository.GetUserByUsernameAndPassword(username, password);
-            
+
             if (existingUser != null)
-                throw new InvalidOperationException("User already exists.");
+                throw AccountException.UserAlreadyExists();
 
             await _accountRepository.CreateUser(username, password);
         }
@@ -54,11 +55,14 @@ namespace Application.Services.Accounts
             return tokenHandler.WriteToken(token);
         }
 
-        public async Task<int?> ValidateUser(string username, string password)
+        public async Task<int> ValidateUser(string username, string password)
         {
             var user = await _accountRepository.GetUserByUsernameAndPassword(username, password);
             
-            return user?.Id;
+            if (user == null)
+                throw AccountException.UserNotFound();
+
+            return user.Id;
         }
 
     }

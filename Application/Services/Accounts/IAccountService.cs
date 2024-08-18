@@ -8,6 +8,6 @@ namespace Application.Services.Accounts
 
         string GenerateToken(int userId);
 
-        Task<int?> ValidateUser(string username, string password);
+        Task<int> ValidateUser(string username, string password);
     }
 }
