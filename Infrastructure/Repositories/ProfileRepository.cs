@@ -22,8 +22,6 @@ namespace Infrastructure.Repositories
 
             var bio = await _dapperContext.Connection.QueryFirstAsync<string>(query, parameters);
 
-            _dapperContext.Dispose();
-
             return bio;
         }
 
@@ -35,8 +33,6 @@ namespace Infrastructure.Repositories
             var query = "SELECT DateOfBirth FROM Users WHERE Id = @id";
 
             var dateOfBirth = await _dapperContext.Connection.QueryFirstAsync<DateTime>(query, parameters);
-
-            _dapperContext.Dispose();
 
             return dateOfBirth;
         }
@@ -50,8 +46,6 @@ namespace Infrastructure.Repositories
 
             var email = await _dapperContext.Connection.QueryFirstAsync<string>(query, parameters);
 
-            _dapperContext.Dispose();
-
             return email;
         }
 
@@ -63,8 +57,6 @@ namespace Infrastructure.Repositories
             var query = "SELECT FirstName FROM Users WHERE Id = @id";
 
             var firstName = await _dapperContext.Connection.QueryFirstAsync<string>(query, parameters);
-
-            _dapperContext.Dispose();
 
             return firstName;
         }
@@ -78,8 +70,6 @@ namespace Infrastructure.Repositories
 
             var imageUrl = await _dapperContext.Connection.QueryFirstAsync<string>(query, parameters);
 
-            _dapperContext.Dispose();
-
             return imageUrl;
         }
 
@@ -91,8 +81,6 @@ namespace Infrastructure.Repositories
             var query = "SELECT LastName FROM Users WHERE Id = @id";
 
             var lastName = await _dapperContext.Connection.QueryFirstAsync<string>(query, parameters);
-
-            _dapperContext.Dispose();
 
             return lastName;
         }
@@ -106,8 +94,6 @@ namespace Infrastructure.Repositories
 
             var phoneNumber = await _dapperContext.Connection.QueryFirstAsync<string>(query, parameters);
 
-            _dapperContext.Dispose();
-
             return phoneNumber;
         }
 
@@ -120,8 +106,6 @@ namespace Infrastructure.Repositories
             var query = "Update Users SET Bio = @bio WHERE Id = @id";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
-
-            _dapperContext.Dispose();
         }
 
         public async Task UpdateDateOfBirth(int id, DateTime dateOfBirth)
@@ -133,8 +117,6 @@ namespace Infrastructure.Repositories
             var query = "Update Users SET DateOfBirth = @dateOfBirth WHERE Id = @id";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
-
-            _dapperContext.Dispose();
         }
 
         public async Task UpdateEmail(int id, string email)
@@ -146,8 +128,6 @@ namespace Infrastructure.Repositories
             var query = "Update Users SET Email = @email WHERE Id = @id";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
-
-            _dapperContext.Dispose();
         }
 
         public async Task UpdateFirstName(int id, string firstName)
@@ -159,8 +139,6 @@ namespace Infrastructure.Repositories
             var query = "Update Users SET FirstName = @firstName WHERE Id = @id";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
-
-            _dapperContext.Dispose();
         }
 
         public async Task UpdateImageUrl(int id, string imageUrl)
@@ -172,8 +150,6 @@ namespace Infrastructure.Repositories
             var query = "Update Users SET ImageUrl = @imageUrl WHERE Id = @id";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
-
-            _dapperContext.Dispose();
         }
 
         public async Task UpdateLastName(int id, string lastName)
@@ -185,8 +161,6 @@ namespace Infrastructure.Repositories
             var query = "Update Users SET LastName = @lastName WHERE Id = @id";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
-
-            _dapperContext.Dispose();
         }
 
         public async Task UpdatePhoneNumber(int id, string phoneNumber)
@@ -198,8 +172,6 @@ namespace Infrastructure.Repositories
             var query = "Update Users SET PhoneNumber = @phoneNumber WHERE Id = @id";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
-
-            _dapperContext.Dispose();
         }
     }
 }

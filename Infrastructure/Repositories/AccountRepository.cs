@@ -31,8 +31,6 @@ namespace Infrastructure.Repositories
             var query = "INSERT INTO Users (Username, Password) VALUES (@username, @password)";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
-
-            _dapperContext.Dispose();
         }
 
         public async Task<User> GetUserByUsernameAndPassword(string username, string password)
