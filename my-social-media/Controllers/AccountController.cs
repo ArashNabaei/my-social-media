@@ -30,10 +30,7 @@ namespace my_social_media.Controllers
         {
             var userId = await _accountService.ValidateUser(userDto.Username, userDto.Password);
 
-            if (userId == null)
-                return Unauthorized("Invalid username or password.");
-
-            var token = _accountService.GenerateToken(userId.Value);
+            var token = _accountService.GenerateToken(userId);
 
             return Ok(new { token });
         }
