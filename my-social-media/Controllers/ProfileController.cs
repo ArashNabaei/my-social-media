@@ -66,7 +66,7 @@ namespace my_social_media.Controllers
         }
 
         [HttpPut("FirstName")]
-        public async Task<IActionResult> UpdateFirstName(string firstName)
+        public async Task<IActionResult> UpdateFirstName([FromBody] string firstName)
         {
             await _profileService.UpdateFirstName(UserId, firstName);
 
@@ -74,7 +74,7 @@ namespace my_social_media.Controllers
         }
 
         [HttpPut("LastName")]
-        public async Task<IActionResult> UpdateLastName(string lastName)
+        public async Task<IActionResult> UpdateLastName([FromBody] string lastName)
         {
             await _profileService.UpdateLastName(UserId, lastName);
 
@@ -82,7 +82,7 @@ namespace my_social_media.Controllers
         }
 
         [HttpPut("Bio")]
-        public async Task<IActionResult> UpdateBio(string bio)
+        public async Task<IActionResult> UpdateBio([FromBody] string bio)
         {
             await _profileService.UpdateBio(UserId, bio);
 
@@ -90,7 +90,7 @@ namespace my_social_media.Controllers
         }
 
         [HttpPut("ImageUrl")]
-        public async Task<IActionResult> UpdateImageUrl(string imageUrl)
+        public async Task<IActionResult> UpdateImageUrl([FromBody] string imageUrl)
         {
             await _profileService.UpdateImageUrl(UserId, imageUrl);
 
@@ -98,7 +98,7 @@ namespace my_social_media.Controllers
         }
 
         [HttpPut("PhoneNumber")]
-        public async Task<IActionResult> UpdatePhoneNumber(string phoneNumber)
+        public async Task<IActionResult> UpdatePhoneNumber([FromBody] string phoneNumber)
         {
             await _profileService.UpdatePhoneNumber(UserId, phoneNumber);
 
@@ -106,7 +106,7 @@ namespace my_social_media.Controllers
         }
 
         [HttpPut("DateOfBirth")]
-        public async Task<IActionResult> UpdateDateOfBirth(DateTime dateOfBirth)
+        public async Task<IActionResult> UpdateDateOfBirth([FromBody] DateTime dateOfBirth)
         {
             await _profileService.UpdateDateOfBirth(UserId, dateOfBirth);
 
