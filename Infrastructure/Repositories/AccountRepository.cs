@@ -13,15 +13,6 @@ namespace Infrastructure.Repositories
             _dapperContext = dapperContext;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers()
-        {
-            var query = "SELECT * FROM Users";
-
-            var users = await _dapperContext.Connection.QueryAsync<User>(query);
-
-            return users;
-        }
-
         public async Task CreateUser(string username, string password)
         {
             var parameters = new DynamicParameters();
