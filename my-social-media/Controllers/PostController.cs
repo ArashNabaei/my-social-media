@@ -43,6 +43,14 @@ namespace my_social_media.Controllers
             return Ok("Post registered successfully.");
         }
 
+        [HttpDelete("DeletePost")]
+        public async Task<IActionResult> DeletePost(int postId)
+        {
+            await _postService.DeletePost(UserId, postId);
+
+            return Ok("Post Deleted successfully.");
+        }
+
         [HttpPut("UpdatePost")]
         public async Task<IActionResult> UpdatePost(int postId, [FromBody] PostDto postDto)
         {
