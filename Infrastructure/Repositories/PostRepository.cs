@@ -61,5 +61,18 @@ namespace Infrastructure.Repositories
 
         }
 
+        public async Task DeletePost(int userId, int postId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("postId", postId);
+
+            var query = "UPDATE Posts " +
+                "SET UserId = -1 " +
+                "WHERE Id = @postId AND UserId = @userId";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+        }
+
     }
 }
