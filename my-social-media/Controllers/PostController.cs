@@ -43,5 +43,13 @@ namespace my_social_media.Controllers
             return Ok("Post registered successfully.");
         }
 
+        [HttpPut("UpdatePost")]
+        public async Task<IActionResult> UpdatePost([FromBody] int postId, [FromBody] PostDto postDto)
+        {
+            await _postService.UpdatePost(UserId,postId, postDto);
+
+            return Ok("Post updated successfully.");
+        }
+
     }
 }
