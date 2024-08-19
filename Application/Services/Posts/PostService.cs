@@ -60,5 +60,11 @@ namespace Application.Services.Posts
             await _postRepository.CreatePost(userId, result);
         }
 
+
+        public async Task DeletePost(int userId, int postId)
+        {
+            await _postRepository.DeletePost(userId, postId);
+        }
+
     }
 }
