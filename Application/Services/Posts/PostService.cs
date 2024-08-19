@@ -1,5 +1,6 @@
 ﻿
 using Application.Dtos;
+using Domain.Entities;
 using Domain.Repositories;
 
 namespace Application.Services.Posts
@@ -40,6 +41,23 @@ namespace Application.Services.Posts
             };
 
             return result;
+        }
+
+        public async Task CreatePost(int userId, PostDto post)
+        {
+            var caption = post.Caption;
+            var imageUrl = post.ImageUrl;
+            var creationTime = post.CreationTime;
+
+            var result = new Post
+            {
+                ImageUrl = imageUrl,
+                Caption = caption,
+                CreationTime = creationTime,
+                UserId = userId,
+            };
+
+            await _postRepository.CreatePost(userId, result);
         }
 
     }
