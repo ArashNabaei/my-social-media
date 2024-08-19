@@ -28,5 +28,19 @@ namespace Application.Services.Posts
             return result;
         }
 
+        public async Task<PostDto> GetPostById(int userId, int postId)
+        {
+            var post = await _postRepository.GetPostById(userId, postId);
+
+            var result = new PostDto
+            {
+                Caption = post.Caption,
+                ImageUrl = post.ImageUrl,
+                CreationTime = post.CreationTime,
+            };
+
+            return result;
+        }
+
     }
 }
