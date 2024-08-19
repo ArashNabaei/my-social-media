@@ -11,5 +11,7 @@ namespace Domain.Entities
 
         public DateTime CreationTime { get; set; }
 
+        public int UserId { get; set; }
+
     }
 }
