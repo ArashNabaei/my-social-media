@@ -1,4 +1,5 @@
-﻿using Application.Services.Posts;
+﻿using Application.Dtos;
+using Application.Services.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,14 @@ namespace my_social_media.Controllers
             var post = await _postService.GetPostById(UserId, postId);
 
             return Ok(post);
+        }
+
+        [HttpPost("CreatePost")]
+        public async Task<IActionResult> CreatePost([FromBody] PostDto postDto)
+        {
+            await _postService.CreatePost(UserId, postDto);
+
+            return Ok("Post registered successfully.");
         }
 
     }
