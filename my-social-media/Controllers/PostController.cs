@@ -28,7 +28,7 @@ namespace my_social_media.Controllers
         }
 
         [HttpGet("GetPostById")]
-        public async Task<IActionResult> GetPostById([FromBody] int postId)
+        public async Task<IActionResult> GetPostById(int postId)
         {
             var post = await _postService.GetPostById(UserId, postId);
 
@@ -44,7 +44,7 @@ namespace my_social_media.Controllers
         }
 
         [HttpPut("UpdatePost")]
-        public async Task<IActionResult> UpdatePost([FromBody] int postId, [FromBody] PostDto postDto)
+        public async Task<IActionResult> UpdatePost(int postId, [FromBody] PostDto postDto)
         {
             await _postService.UpdatePost(UserId,postId, postDto);
 
