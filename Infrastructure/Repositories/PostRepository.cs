@@ -1,5 +1,4 @@
-﻿
-using Dapper;
+﻿using Dapper;
 using Domain.Entities;
 using Domain.Repositories;
 
@@ -18,11 +17,33 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<Post>> GetAllPosts(int userId)
         {
-            var query = "SELECT * FROM Posts LEFT JOIN Users ON Posts.UserId = Users.Id";
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
 
-            var posts = await _dapperContext.Connection.QueryAsync<Post>(query);
+            var query = "SELECT * FROM Posts " +
+                "LEFT JOIN Users " +
+                "ON Posts.UserId = Users.Id " +
+                "WHERE UserId = @userId";
+
+            var posts = await _dapperContext.Connection.QueryAsync<Post>(query, parameters);
 
             return posts;
+        }
+
+        public async Task<Post> GetPostById(int userId, int postId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("postId", postId);
+
+            var query = "SELECT * FROM Posts " +
+                "LEFT JOIN Users " +
+                "ON Posts.UserId = Users.Id " +
+                "WHERE UserId = @userId AND Id = postId";
+
+            var post = await _dapperContext.Connection.QueryFirstOrDefaultAsync<Post>(query, parameters);
+
+            return post;
         }
 
     }
