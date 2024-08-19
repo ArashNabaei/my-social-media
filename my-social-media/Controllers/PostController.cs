@@ -26,5 +26,13 @@ namespace my_social_media.Controllers
             return Ok(posts);
         }
 
+        [HttpGet("GetPostById")]
+        public async Task<IActionResult> GetPostById([FromBody] int postId)
+        {
+            var post = await _postService.GetPostById(UserId, postId);
+
+            return Ok(post);
+        }
+
     }
 }
