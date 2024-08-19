@@ -46,5 +46,20 @@ namespace Infrastructure.Repositories
             return post;
         }
 
+        public async Task CreatePost(int userId,  Post post)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("caption", post.Caption);
+            parameters.Add("imageUrl", post.ImageUrl);
+            parameters.Add("creationTime", post.CreationTime);
+            parameters.Add("userId", userId);
+
+            var query = "INSERT INTO Posts (Caption, ImageUrl, CreationTime, UserId) " +
+                "VALUES (@caption, @imageUrl, @creationTime, @userId)";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+
+        }
+
     }
 }
