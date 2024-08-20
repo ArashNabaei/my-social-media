@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using Domain.Entities;
 using Domain.Repositories;
+using Shared.Exceptions.Posts;
 
 namespace Application.Services.Posts
 {
@@ -49,7 +50,7 @@ namespace Application.Services.Posts
             var existPost = await GetPostById(userId, post.Id);
 
             if (existPost != null)
-                throw new Exception("Post already exists.");
+                throw PostException.PostAlreadyExists();
 
             var caption = post.Caption;
             var imageUrl = post.ImageUrl;
@@ -72,7 +73,7 @@ namespace Application.Services.Posts
             var post = await GetPostById(userId, postId);
 
             if (post == null)
-                throw new Exception("Post was not found.");
+                throw PostException.PostNotFound();
 
             await _postRepository.DeletePost(userId, postId);
         }
@@ -82,7 +83,7 @@ namespace Application.Services.Posts
             var foundedPost = await GetPostById(userId, postId);
 
             if (foundedPost == null)
-                throw new Exception("Post was not found.");
+                throw PostException.PostNotFound();
 
             var caption = post.Caption;
             var imageUrl = post.ImageUrl;

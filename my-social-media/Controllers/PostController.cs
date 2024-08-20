@@ -11,7 +11,6 @@ namespace my_social_media.Controllers
 
     public class PostController : BaseController
     {
-
         private readonly IPostService _postService;
 
         public PostController(IPostService postService)
