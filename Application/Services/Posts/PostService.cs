@@ -47,11 +47,6 @@ namespace Application.Services.Posts
 
         public async Task CreatePost(int userId, PostDto post)
         {
-            var existPost = await GetPostById(userId, post.Id);
-
-            if (existPost != null)
-                throw PostException.PostAlreadyExists();
-
             var caption = post.Caption;
             var imageUrl = post.ImageUrl;
             var creationTime = DateTime.UtcNow;
