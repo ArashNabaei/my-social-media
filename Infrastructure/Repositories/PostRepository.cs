@@ -39,7 +39,7 @@ namespace Infrastructure.Repositories
             var query = "SELECT * FROM Posts " +
                 "LEFT JOIN Users " +
                 "ON Posts.UserId = Users.Id " +
-                "WHERE UserId = @userId AND Id = postId";
+                "WHERE UserId = @userId AND Id = @postId";
 
             var post = await _dapperContext.Connection.QueryFirstOrDefaultAsync<Post>(query, parameters);
 
