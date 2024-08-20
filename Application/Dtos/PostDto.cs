@@ -10,7 +10,5 @@ namespace Application.Dtos
         public string Caption { get; set; }
 
         public DateTime CreationTime { get; set; }
-
-
     }
 }

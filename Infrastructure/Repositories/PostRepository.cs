@@ -45,8 +45,7 @@ namespace Infrastructure.Repositories
                     Posts.Id,
                     Posts.ImageUrl,
                     Posts.Caption,
-                    Posts.CreationTime,
-                    Posts.UserId
+                    Posts.CreationTime
                   FROM Posts
                   INNER JOIN Users ON Posts.UserId = Users.Id
                   WHERE Posts.UserId = @userId AND Posts.Id = @postId AND IsDeleted = 0";
@@ -93,7 +92,7 @@ namespace Infrastructure.Repositories
             parameters.Add("userId", userId);
 
             var query = "UPDATE Posts " +
-                "SET Caption = @caption, ImageUrl = @imageUrl, " +
+                "SET Caption = @caption, ImageUrl = @imageUrl " +
                 "WHERE Id = @postId AND UserId = @userId";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
