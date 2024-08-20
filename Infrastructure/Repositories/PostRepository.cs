@@ -90,12 +90,10 @@ namespace Infrastructure.Repositories
             parameters.Add("postId", postId);
             parameters.Add("caption", post.Caption);
             parameters.Add("imageUrl", post.ImageUrl);
-            parameters.Add("creationTime", post.CreationTime);
             parameters.Add("userId", userId);
 
             var query = "UPDATE Posts " +
                 "SET Caption = @caption, ImageUrl = @imageUrl, " +
-                "CreationTime = @creationTime " +
                 "WHERE Id = @postId AND UserId = @userId";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);

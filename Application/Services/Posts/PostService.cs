@@ -48,7 +48,7 @@ namespace Application.Services.Posts
         {
             var caption = post.Caption;
             var imageUrl = post.ImageUrl;
-            var creationTime = post.CreationTime;
+            var creationTime = DateTime.UtcNow;
 
             var result = new Post
             {
