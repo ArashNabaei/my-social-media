@@ -20,15 +20,20 @@ namespace Infrastructure.Repositories
             var parameters = new DynamicParameters();
             parameters.Add("userId", userId);
 
-            var query = "SELECT * FROM Posts " +
-                "LEFT JOIN Users " +
-                "ON Posts.UserId = Users.Id " +
-                "WHERE UserId = @userId";
+            var query = @"SELECT 
+                    Posts.Id,
+                    Posts.ImageUrl,
+                    Posts.Caption,
+                    Posts.CreationTime
+                  FROM Posts
+                  INNER JOIN Users ON Posts.UserId = Users.Id
+                  WHERE Posts.UserId = @userId";
 
             var posts = await _dapperContext.Connection.QueryAsync<Post>(query, parameters);
 
             return posts;
         }
+
 
         public async Task<Post> GetPostById(int userId, int postId)
         {
@@ -41,7 +46,7 @@ namespace Infrastructure.Repositories
                     Posts.ImageUrl,
                     Posts.Caption,
                     Posts.CreationTime,
-                    Posts.UserId,
+                    Posts.UserId
                   FROM Posts
                   INNER JOIN Users ON Posts.UserId = Users.Id
                   WHERE Posts.UserId = @userId AND Posts.Id = @postId";

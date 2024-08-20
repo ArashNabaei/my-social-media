@@ -20,6 +20,7 @@ namespace Application.Services.Posts
 
             var result = posts.Select(post => new PostDto
             {
+                Id = post.Id,
                 Caption = post.Caption,
                 ImageUrl = post.ImageUrl,
                 CreationTime = post.CreationTime,
