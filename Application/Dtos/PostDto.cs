@@ -1,7 +1,7 @@
 ﻿
-namespace Domain.Entities
+namespace Application.Dtos
 {
-    public class Post
+    public class PostDto
     {
         public int Id { get; set; }
 
@@ -10,10 +10,5 @@ namespace Domain.Entities
         public string Caption { get; set; }
 
         public DateTime CreationTime { get; set; }
-
-        public int UserId { get; set; }
-
-        public int IsDeleted { get; set; }
-
     }
 }
