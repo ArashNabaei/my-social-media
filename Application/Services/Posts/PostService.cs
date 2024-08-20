@@ -46,6 +46,11 @@ namespace Application.Services.Posts
 
         public async Task CreatePost(int userId, PostDto post)
         {
+            var existPost = await GetPostById(userId, post.Id);
+
+            if (existPost != null)
+                throw new Exception("Post already exists.");
+
             var caption = post.Caption;
             var imageUrl = post.ImageUrl;
             var creationTime = DateTime.UtcNow;
@@ -64,11 +69,21 @@ namespace Application.Services.Posts
 
         public async Task DeletePost(int userId, int postId)
         {
+            var post = await GetPostById(userId, postId);
+
+            if (post == null)
+                throw new Exception("Post was not found.");
+
             await _postRepository.DeletePost(userId, postId);
         }
 
         public async Task UpdatePost(int userId, int postId, PostDto post)
         {
+            var foundedPost = await GetPostById(userId, postId);
+
+            if (foundedPost == null)
+                throw new Exception("Post was not found.");
+
             var caption = post.Caption;
             var imageUrl = post.ImageUrl;
             var creationTime = post.CreationTime;
