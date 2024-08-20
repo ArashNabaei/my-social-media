@@ -27,7 +27,7 @@ namespace Infrastructure.Repositories
                     Posts.CreationTime
                   FROM Posts
                   INNER JOIN Users ON Posts.UserId = Users.Id
-                  WHERE Posts.UserId = @userId";
+                  WHERE Posts.UserId = @userId AND IsDeleted = 0";
 
             var posts = await _dapperContext.Connection.QueryAsync<Post>(query, parameters);
 
@@ -49,7 +49,7 @@ namespace Infrastructure.Repositories
                     Posts.UserId
                   FROM Posts
                   INNER JOIN Users ON Posts.UserId = Users.Id
-                  WHERE Posts.UserId = @userId AND Posts.Id = @postId";
+                  WHERE Posts.UserId = @userId AND Posts.Id = @postId AND IsDeleted = 0";
 
             var post = await _dapperContext.Connection.QueryFirstOrDefaultAsync<Post>(query, parameters);
 
@@ -64,8 +64,8 @@ namespace Infrastructure.Repositories
             parameters.Add("creationTime", post.CreationTime);
             parameters.Add("userId", userId);
 
-            var query = "INSERT INTO Posts (Caption, ImageUrl, CreationTime, UserId) " +
-                "VALUES (@caption, @imageUrl, @creationTime, @userId)";
+            var query = "INSERT INTO Posts (Caption, ImageUrl, CreationTime, UserId, IsDeleted) " +
+                "VALUES (@caption, @imageUrl, @creationTime, @userId, 0)";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
 
@@ -78,7 +78,7 @@ namespace Infrastructure.Repositories
             parameters.Add("postId", postId);
 
             var query = "UPDATE Posts " +
-                "SET UserId = -1 " +
+                "SET IsDeleted = 1 " +
                 "WHERE Id = @postId AND UserId = @userId";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);

@@ -13,5 +13,7 @@ namespace Domain.Entities
 
         public int UserId { get; set; }
 
+        public int IsDeleted { get; set; }
+
     }
 }
