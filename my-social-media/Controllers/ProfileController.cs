@@ -113,5 +113,13 @@ namespace my_social_media.Controllers
             return Ok();
         }
 
+        [HttpGet("Profile")]
+        public async Task<IActionResult> GetProfile()
+        {
+            var profile = await _profileService.GetProfile(UserId);
+
+            return Ok(new { Profile = profile});
+        }
+
     }
 }
