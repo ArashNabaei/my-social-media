@@ -1,4 +1,6 @@
 ﻿
+using Domain.Entities;
+
 namespace Domain.Repositories
 {
     public interface IProfileRepository
@@ -30,6 +32,8 @@ namespace Domain.Repositories
         Task UpdateImageUrl(int id, string imageUrl);
 
         Task UpdateDateOfBirth(int id, DateTime dateOfBirth);
+
+        Task<User> GetProfile(int id);
 
     }
 }

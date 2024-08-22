@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Domain.Entities;
 using Domain.Repositories;
 
 namespace Infrastructure.Repositories
@@ -173,5 +174,18 @@ namespace Infrastructure.Repositories
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
         }
+
+        public async Task<User> GetProfile(int id)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+
+            var query = "SELECT * FROM Users WHERE Id = @id";
+
+            var user = await _dapperContext.Connection.QueryFirstAsync<User>(query, parameters);
+
+            return user;
+        }
+
     }
 }
