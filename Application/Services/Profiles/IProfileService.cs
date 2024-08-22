@@ -35,5 +35,7 @@ namespace Application.Services.Profiles
 
         Task<User> GetProfile(int id);
 
+        Task UpdateProfile(int id, User user);
+
     }
 }

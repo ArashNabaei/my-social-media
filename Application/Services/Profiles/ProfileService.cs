@@ -150,5 +150,45 @@ namespace Application.Services.Profiles
             return user;
         }
 
+        public async Task UpdateProfile(int id, User user)
+        {
+            if (user == null)
+                throw ProfileException.InvalidProfileData();
+
+            CheckUserFields(user);
+
+            await _profileRepository.UpdateProfile(id, user);
+        }
+
+        private void CheckUserFields(User user)
+        {
+            if (string.IsNullOrWhiteSpace(user.FirstName))
+                throw ProfileException.RequiredField(user.FirstName);
+
+            if (string.IsNullOrWhiteSpace(user.LastName))
+                throw ProfileException.RequiredField(user.LastName);
+
+            if (string.IsNullOrWhiteSpace(user.Username))
+                throw ProfileException.RequiredField(user.Username);
+
+            if (string.IsNullOrWhiteSpace(user.Password))
+                throw ProfileException.RequiredField(user.Password);
+
+            if (string.IsNullOrWhiteSpace(user.Email))
+                throw ProfileException.RequiredField(user.Email);
+
+            if (string.IsNullOrWhiteSpace(user.PhoneNumber))
+                throw ProfileException.RequiredField(user.PhoneNumber);
+
+            if (string.IsNullOrWhiteSpace(user.Bio))
+                throw ProfileException.RequiredField(user.Bio);
+
+            if (string.IsNullOrWhiteSpace(user.ImageUrl))
+                throw ProfileException.RequiredField(user.ImageUrl);
+
+            if (user.DateOfBirth == DateTime.MinValue)
+                throw ProfileException.InvalidDateOfBirth(user.DateOfBirth);
+        }
+
     }
 }
