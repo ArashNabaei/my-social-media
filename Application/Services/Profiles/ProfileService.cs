@@ -1,4 +1,5 @@
-﻿using Domain.Repositories;
+﻿using Domain.Entities;
+using Domain.Repositories;
 using Shared.Exceptions.Profiles;
 
 namespace Application.Services.Profiles
@@ -138,5 +139,16 @@ namespace Application.Services.Profiles
 
             await _profileRepository.UpdatePhoneNumber(id, phoneNumber);
         }
+
+        public async Task<User> GetProfile(int id)
+        {
+            var user = await _profileRepository.GetProfile(id);
+
+            if (user == null)
+                throw ProfileException.ProfileNotFound();
+
+            return user;
+        }
+
     }
 }

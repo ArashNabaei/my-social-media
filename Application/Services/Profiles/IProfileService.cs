@@ -1,4 +1,5 @@
-﻿
+﻿using Domain.Entities;
+
 namespace Application.Services.Profiles
 {
     public interface IProfileService
@@ -31,6 +32,8 @@ namespace Application.Services.Profiles
         Task UpdatePhoneNumber(int id, string phoneNumber);
 
         Task UpdateLastName(int id, string lastName);
+
+        Task<User> GetProfile(int id);
 
     }
 }
