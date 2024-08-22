@@ -35,5 +35,7 @@ namespace Domain.Repositories
 
         Task<User> GetProfile(int id);
 
+        Task UpdateProfile(int id, User user);
+
     }
 }
