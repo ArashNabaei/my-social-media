@@ -1,4 +1,5 @@
 ﻿using Application.Services.Profiles;
+using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -119,6 +120,14 @@ namespace my_social_media.Controllers
             var profile = await _profileService.GetProfile(UserId);
 
             return Ok(new { Profile = profile});
+        }
+
+        [HttpPut("Profile")]
+        public async Task<IActionResult> UpdateProfile([FromBody] User user)
+        {
+            await _profileService.UpdateProfile(UserId, user);
+
+            return Ok();
         }
 
     }
