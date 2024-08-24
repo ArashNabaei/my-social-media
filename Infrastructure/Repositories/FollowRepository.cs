@@ -118,15 +118,28 @@ namespace Infrastructure.Repositories
             return users;
         }
 
-        public async Task RemoveFollower(int userId, int FollowerId)
+        public async Task RemoveFollower(int userId, int followerId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("userId", userId);
-            parameters.Add("FollowerId", FollowerId);
+            parameters.Add("followerId", followerId);
 
             var query = "UPDATE Follows " +
                 "SET IsDeleted = 1 " +
-                "WHERE FollowingId = @userId AND @FollowerId = @followerId";
+                "WHERE FollowingId = @userId AND FollowerId = @followerId";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+        }
+
+        public async Task RemoveFollowing(int userId, int followingId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("followingId", followingId);
+
+            var query = "UPDATE Follows " +
+                "SET IsDeleted = 1 " +
+                "WHERE FollowerId = @userId AND FollowingId = @followingId";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
         }
