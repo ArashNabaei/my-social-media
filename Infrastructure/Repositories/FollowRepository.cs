@@ -28,7 +28,8 @@ namespace Infrastructure.Repositories
                 "INNER JOIN Follows " +
                 "ON Users.Id = Follows.FollowerId AND FollowingId = @userId " +
                 "INNER JOIN Follows " +
-                "ON Users.Id = Follows.FollowingId AND FollowerId = @userId";
+                "ON Users.Id = Follows.FollowingId AND FollowerId = @userId " +
+                "WHERE IsDeleted = 0";
 
             var users = await _dapperContext.Connection.QueryAsync<User>(query, parameters);
 
@@ -47,7 +48,8 @@ namespace Infrastructure.Repositories
                 "ImageUrl " +
                 "FROM Users " +
                 "INNER JOIN Follows " +
-                "ON Users.Id = Follows.FollowerId AND FollowingId = @userId ";
+                "ON Users.Id = Follows.FollowerId AND FollowingId = @userId " +
+                "WHERE IsDeleted = 0";
 
             var users = await _dapperContext.Connection.QueryAsync<User>(query, parameters);
 
@@ -66,7 +68,8 @@ namespace Infrastructure.Repositories
                 "ImageUrl " +
                 "FROM Users " +
                 "INNER JOIN Follows " +
-                "ON Users.Id = Follows.FollowingId AND FollowerId = @userId ";
+                "ON Users.Id = Follows.FollowingId AND FollowerId = @userId " +
+                "WHERE IsDeleted = 0";
 
             var users = await _dapperContext.Connection.QueryAsync<User>(query, parameters);
 
@@ -87,7 +90,7 @@ namespace Infrastructure.Repositories
                 "FROM Users " +
                 "INNER JOIN Follows " +
                 "ON Users.Id = Follows.FollowerId AND FollowingId = @userId " +
-                "WHERE Follows.Id = @followerId";
+                "WHERE Follows.Id = @followerId AND IsDeleted = 0";
 
             var users = await _dapperContext.Connection.QueryFirstOrDefaultAsync<User>(query, parameters);
 
@@ -108,7 +111,7 @@ namespace Infrastructure.Repositories
                 "FROM Users " +
                 "INNER JOIN Follows " +
                 "ON Users.Id = Follows.FollowingId AND FollowerId = @userId " +
-                "WHERE Follows.Id = @followingId";
+                "WHERE Follows.Id = @followingId AND IsDeleted = 0";
 
             var users = await _dapperContext.Connection.QueryFirstOrDefaultAsync<User>(query, parameters);
 
