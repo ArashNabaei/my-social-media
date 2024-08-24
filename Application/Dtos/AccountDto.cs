@@ -1,7 +1,7 @@
 ﻿
 namespace Application.Dtos
 {
-    public class UserDto
+    public class AccountDto
     {
         public string Username { get; set; }
 

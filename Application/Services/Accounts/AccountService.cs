@@ -22,10 +22,10 @@ namespace Application.Services.Accounts
             _configuration = configuration;
         }
 
-        public async Task CreateUser(UserDto userDto)
+        public async Task CreateUser(AccountDto user)
         {
-            var username = userDto.Username;
-            var password = userDto.Password;
+            var username = user.Username;
+            var password = user.Password;
 
             var existingUser = await _accountRepository.GetUserByUsernameAndPassword(username, password);
 

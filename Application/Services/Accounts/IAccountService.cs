@@ -4,7 +4,7 @@ namespace Application.Services.Accounts
 {
     public interface IAccountService
     {
-        Task CreateUser(UserDto userDto);
+        Task CreateUser(AccountDto user);
 
         string GenerateToken(int userId);
 

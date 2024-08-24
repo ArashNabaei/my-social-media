@@ -18,7 +18,7 @@ namespace my_social_media.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> SignUp(UserDto user)
+        public async Task<IActionResult> SignUp(AccountDto user)
         {
             await _accountService.CreateUser(user);
 
@@ -26,9 +26,9 @@ namespace my_social_media.Controllers
         }
 
         [HttpPost("signin")]
-        public async Task<IActionResult> SignIn(UserDto userDto)
+        public async Task<IActionResult> SignIn(AccountDto user)
         {
-            var userId = await _accountService.ValidateUser(userDto.Username, userDto.Password);
+            var userId = await _accountService.ValidateUser(user.Username, user.Password);
 
             var token = _accountService.GenerateToken(userId);
 
