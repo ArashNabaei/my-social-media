@@ -14,10 +14,10 @@ namespace Infrastructure.Repositories
             _dapperContext = dapperContext;
         }
 
-        public async Task<IEnumerable<User>> GetAllFriends(int id)
+        public async Task<IEnumerable<User>> GetAllFriends(int userId)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("id", id);
+            parameters.Add("userId", userId);
 
             var query = "SELECT Id, " +
                 "FirstName, " +
@@ -26,9 +26,28 @@ namespace Infrastructure.Repositories
                 "ImageUrl " +
                 "FROM Users " +
                 "INNER JOIN Follows " +
-                "ON Users.Id = Follows.FollowerId AND FollowingId = @id " +
+                "ON Users.Id = Follows.FollowerId AND FollowingId = @userId " +
                 "INNER JOIN Follows " +
-                "ON Users.Id = Follows.FollowingId AND FollowerId = @id";
+                "ON Users.Id = Follows.FollowingId AND FollowerId = @userId";
+
+            var users = await _dapperContext.Connection.QueryAsync<User>(query, parameters);
+
+            return users;
+        }
+
+        public async Task<IEnumerable<User>> GetAllFollowers(int userId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+
+            var query = "SELECT Id, " +
+                "FirstName, " +
+                "LastName, " +
+                "Bio, " +
+                "ImageUrl " +
+                "FROM Users " +
+                "INNER JOIN Follows " +
+                "ON Users.Id = Follows.FollowerId AND FollowingId = @userId ";
 
             var users = await _dapperContext.Connection.QueryAsync<User>(query, parameters);
 
