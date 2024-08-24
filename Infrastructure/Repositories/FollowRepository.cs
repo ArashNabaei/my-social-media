@@ -94,5 +94,26 @@ namespace Infrastructure.Repositories
             return users;
         }
 
+        public async Task<User> GetFollowingById(int userId, int followingId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("followingId", followingId);
+
+            var query = "SELECT Id, " +
+                "FirstName, " +
+                "LastName, " +
+                "Bio, " +
+                "ImageUrl " +
+                "FROM Users " +
+                "INNER JOIN Follows " +
+                "ON Users.Id = Follows.FollowingId AND FollowerId = @userId " +
+                "WHERE Follows.Id = @followingId";
+
+            var users = await _dapperContext.Connection.QueryFirstOrDefaultAsync<User>(query, parameters);
+
+            return users;
+        }
+
     }
 }
