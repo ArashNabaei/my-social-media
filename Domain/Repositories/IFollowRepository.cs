@@ -4,20 +4,20 @@ namespace Domain.Repositories
 {
     public interface IFollowRepository
     {
-        Task<IEnumerable<User>> GetAllFriends(int id);
+        Task<IEnumerable<User>> GetAllFriends(int userId);
 
-        Task<IEnumerable<User>> GetAllFollowers();
+        Task<IEnumerable<User>> GetAllFollowers(int userId);
         
-        Task<IEnumerable<User>> GetAllFollowings();
+        Task<IEnumerable<User>> GetAllFollowings(int userId);
 
-        Task<User> GetFollowerById(int id);
+        Task<User> GetFollowerById(int userId, int followerId);
 
-        Task<User> GetFollowingById(int id);
+        Task<User> GetFollowingById(int userId, int followingId);
 
-        Task RemoveFollower(int id);
+        Task RemoveFollower(int userId, int FollowerId);
 
-        Task RemoveFollowing(int id);
+        Task RemoveFollowing(int userId, int FollowingId);
 
-        Task Follow(int id);
+        Task Follow(int userId, int id);
     }
 }
