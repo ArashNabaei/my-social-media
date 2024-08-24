@@ -2,9 +2,9 @@
 
 namespace Domain.Repositories
 {
-    public interface IFriendRepository
+    public interface IFollowRepository
     {
-        Task<IEnumerable<User>> GetAllFriends();
+        Task<IEnumerable<User>> GetAllFriends(int id);
 
         Task<IEnumerable<User>> GetAllFollowers();
         
