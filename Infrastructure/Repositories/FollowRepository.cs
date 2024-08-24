@@ -115,5 +115,18 @@ namespace Infrastructure.Repositories
             return users;
         }
 
+        public async Task RemoveFollower(int userId, int FollowerId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("FollowerId", FollowerId);
+
+            var query = "UPDATE Follows " +
+                "SET IsDeleted = 1 " +
+                "WHERE FollowingId = @userId AND @FollowerId = @followerId";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+        }
+
     }
 }
