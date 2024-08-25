@@ -102,5 +102,10 @@ namespace Application.Services.Follows
             await _followRepository.RemoveFollowing(userId, followingId);
         }
 
+        public async Task Follow(int userId, int id)
+        {
+            await _followRepository.Follow(userId, id);
+        }
+
     }
 }
