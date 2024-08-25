@@ -16,12 +16,20 @@ namespace my_social_media.Controllers
             _followService = followService;
         }
 
-        [HttpGet("GetAllfriends")]
-        public async Task<IActionResult> GetAllfriends()
+        [HttpGet("GetAllFriends")]
+        public async Task<IActionResult> GetAllFriends()
         {
             var friends = await _followService.GetAllFriends(UserId);
 
             return Ok(friends);
+        }
+
+        [HttpGet("GetAllFollowers")]
+        public async Task<IActionResult> GetAllFollowers()
+        {
+            var followers = await _followService.GetAllFollowers(UserId);
+
+            return Ok(followers);
         }
 
     }
