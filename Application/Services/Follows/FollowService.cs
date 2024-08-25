@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Domain.Repositories;
+using Shared.Exceptions.Follows;
 
 namespace Application.Services.Follows
 {
@@ -94,11 +95,21 @@ namespace Application.Services.Follows
 
         public async Task RemoveFollower(int userId, int followerId)
         {
+            var follower = await _followRepository.GetFollowerById(userId, followerId);
+
+            if (follower == null)
+                throw FollowException.FollowerNotFound();
+
             await _followRepository.RemoveFollower(userId, followerId);
         }
 
         public async Task RemoveFollowing(int userId, int followingId)
         {
+            var following = await _followRepository.GetFollowingById(userId, followingId);
+
+            if (following == null)
+                throw FollowException.FollowingNotFound();
+
             await _followRepository.RemoveFollowing(userId, followingId);
         }
 
