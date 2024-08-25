@@ -144,5 +144,22 @@ namespace Infrastructure.Repositories
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
         }
 
+        private bool ValidateFollow(int userId, int id)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("id", id);
+
+            var query = "SELECT IsDeleted FROM Follows " +
+                "WHERE FollowingId = @id AND FollowerId = @userId";
+
+            var follow = _dapperContext.Connection.QueryFirstOrDefault<int>(query, parameters);
+
+            if (follow == 0 || follow == 1)
+                return true;
+
+            return false;
+        }
+
     }
 }
