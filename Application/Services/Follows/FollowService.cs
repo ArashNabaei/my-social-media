@@ -76,5 +76,21 @@ namespace Application.Services.Follows
             return result;
         }
 
+        public async Task<UserDto> GetFollowingById(int userId, int followingId)
+        {
+            var following = await _followRepository.GetFollowingById(userId, followingId);
+
+            var result = new UserDto
+            {
+                Id = following.Id,
+                FirstName = following.FirstName,
+                LastName = following.LastName,
+                Bio = following.Bio,
+                ImageUrl = following.ImageUrl,
+            };
+
+            return result;
+        }
+
     }
 }
