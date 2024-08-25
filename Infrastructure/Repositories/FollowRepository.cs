@@ -144,6 +144,26 @@ namespace Infrastructure.Repositories
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
         }
 
+        public async Task Follow(int userId, int id)
+        {
+            var createdAt = DateTime.UtcNow;
+
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("id", id);
+            parameters.Add("createdAt", createdAt);
+
+            var query = "";
+
+            if (ValidateFollow(userId, id))
+                query = "UPDATE Follows " +
+                    "SET IsDeleted = 0 " +
+                    "WHERE FollowerId = @userId AND FollowingId = @id";
+
+            query = "INSERT INTO Follows (FollowerId, FollowingId, CreatedAt) " +
+                "VALUES (@userId, @id, @createdAt)";
+        }
+
         private bool ValidateFollow(int userId, int id)
         {
             var parameters = new DynamicParameters();
