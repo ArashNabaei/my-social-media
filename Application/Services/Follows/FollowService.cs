@@ -28,5 +28,21 @@ namespace Application.Services.Follows
             return result;
         }
 
+        public async Task<IEnumerable<UserDto>> GetAllFollowers(int userId)
+        {
+            var followers = await _followRepository.GetAllFollowers(userId);
+
+            var result = followers.Select(follower => new UserDto
+            {
+                Id = follower.Id,
+                FirstName = follower.FirstName,
+                LastName = follower.LastName,
+                Bio = follower.Bio,
+                ImageUrl = follower.ImageUrl,
+            });
+
+            return result;
+        }
+
     }
 }
