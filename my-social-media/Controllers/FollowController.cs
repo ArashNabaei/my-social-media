@@ -32,5 +32,13 @@ namespace my_social_media.Controllers
             return Ok(followers);
         }
 
+        [HttpGet("GetAllFollowings")]
+        public async Task<IActionResult> GetAllFollowings()
+        {
+            var followings = await _followService.GetAllFollowings(UserId);
+
+            return Ok(followings);
+        }
+
     }
 }
