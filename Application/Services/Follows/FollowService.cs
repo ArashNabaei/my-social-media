@@ -92,5 +92,15 @@ namespace Application.Services.Follows
             return result;
         }
 
+        public async Task RemoveFollower(int userId, int followerId)
+        {
+            await _followRepository.RemoveFollower(userId, followerId);
+        }
+
+        public async Task RemoveFollowing(int userId, int followingId)
+        {
+            await _followRepository.RemoveFollowing(userId, followingId);
+        }
+
     }
 }
