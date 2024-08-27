@@ -155,15 +155,15 @@ namespace Infrastructure.Repositories
             parameters.Add("id", id);
             parameters.Add("createdAt", createdAt);
 
-            var query = "";
-
-            if (ValidateFollow(userId, id))
-                query = "UPDATE Follows " +
+            var query = "UPDATE Follows " +
                     "SET IsDeleted = 0 " +
                     "WHERE FollowerId = @userId AND FollowingId = @id";
 
-            query = "INSERT INTO Follows (FollowerId, FollowingId, CreatedAt) " +
+            if (ValidateFollow(userId, id))
+                query = "INSERT INTO Follows (FollowerId, FollowingId, CreatedAt) " +
                 "VALUES (@userId, @id, @createdAt)";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
         }
 
         private bool ValidateFollow(int userId, int id)
@@ -172,12 +172,12 @@ namespace Infrastructure.Repositories
             parameters.Add("userId", userId);
             parameters.Add("id", id);
 
-            var query = "SELECT IsDeleted FROM Follows " +
+            var query = "SELECT COUNT(*) FROM Follows " +
                 "WHERE FollowingId = @id AND FollowerId = @userId";
 
             var follow = _dapperContext.Connection.QueryFirstOrDefault<int>(query, parameters);
 
-            if (follow == 0 || follow == 1)
+            if (follow == 0)
                 return true;
 
             return false;
