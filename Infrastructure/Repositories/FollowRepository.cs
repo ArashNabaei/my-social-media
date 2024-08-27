@@ -92,7 +92,7 @@ namespace Infrastructure.Repositories
                 "FROM Users u " +
                 "INNER JOIN Follows f " +
                 "ON u.Id = f.FollowerId AND f.FollowingId = @userId " +
-                "WHERE f.Id = @followerId AND f.IsDeleted = 0";
+                "WHERE f.FollowerId = @followerId AND f.IsDeleted = 0";
 
             var users = await _dapperContext.Connection.QueryFirstOrDefaultAsync<User>(query, parameters);
 
@@ -113,7 +113,7 @@ namespace Infrastructure.Repositories
                 "FROM Users u " +
                 "INNER JOIN Follows f " +
                 "ON u.Id = f.FollowingId AND f.FollowerId = @userId " +
-                "WHERE f.Id = @followingId AND f.IsDeleted = 0";
+                "WHERE f.FollowingId = @followingId AND f.IsDeleted = 0";
 
             var users = await _dapperContext.Connection.QueryFirstOrDefaultAsync<User>(query, parameters);
 
