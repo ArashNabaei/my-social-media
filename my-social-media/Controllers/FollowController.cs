@@ -40,5 +40,13 @@ namespace my_social_media.Controllers
             return Ok(followings);
         }
 
+        [HttpGet("GetFollowerById")]
+        public async Task<IActionResult> GetFollowerById(int followerId)
+        {
+            var follower = await _followService.GetFollowerById(UserId, followerId);
+
+            return Ok(follower);
+        }
+
     }
 }
