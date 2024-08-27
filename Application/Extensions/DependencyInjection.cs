@@ -1,4 +1,5 @@
 ﻿using Application.Services.Accounts;
+using Application.Services.Follows;
 using Application.Services.Posts;
 using Application.Services.Profiles;
 using Domain.Repositories;
@@ -16,6 +17,7 @@ namespace Application.Extensions
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IFollowService, FollowService>();
 
             return services;
         }
@@ -25,6 +27,7 @@ namespace Application.Extensions
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IProfileRepository, ProfileRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IFollowRepository, FollowRepository>();
 
             services.AddScoped<DapperContext>();
 
