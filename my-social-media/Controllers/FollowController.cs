@@ -72,5 +72,13 @@ namespace my_social_media.Controllers
             return Ok();
         }
 
+        [HttpPost("Follow")]
+        public async Task<IActionResult> Follow(int id)
+        {
+            await _followService.Follow(UserId, id);
+
+            return Ok();
+        }
+
     }
 }
