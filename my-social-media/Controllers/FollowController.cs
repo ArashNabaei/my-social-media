@@ -64,5 +64,13 @@ namespace my_social_media.Controllers
             return Ok();
         }
 
+        [HttpDelete("RemoveFollowingById")]
+        public async Task<IActionResult> RemoveFollowing(int followinId)
+        {
+            await _followService.RemoveFollowing(UserId, followinId);
+
+            return Ok();
+        }
+
     }
 }
