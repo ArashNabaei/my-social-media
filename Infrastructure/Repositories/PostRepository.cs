@@ -98,5 +98,20 @@ namespace Infrastructure.Repositories
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
         }
 
+        public async Task LikePost(int userId, int postId)
+        {
+            var createdAt = DateTime.UtcNow;
+
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("postId", postId);
+            parameters.Add("createdAt", createdAt);
+
+            var query = "INSERT INTO Likes (UserId, PostId, CreatedAt) " +
+                "VALUES (@userId, @postId, @createdAt)";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+        }
+
     }
 }
