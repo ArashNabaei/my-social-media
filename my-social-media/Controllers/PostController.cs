@@ -66,5 +66,13 @@ namespace my_social_media.Controllers
             return Ok("Post liked successfully.");
         }
 
+        [HttpGet("GetLikesOfPost")]
+        public async Task<IActionResult> GetLikesOfPost(int postId)
+        {
+            var likes = await _postService.GetLikesOfPost(UserId, postId);
+
+            return Ok(likes);
+        }
+
     }
 }
