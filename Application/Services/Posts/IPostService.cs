@@ -14,5 +14,7 @@ namespace Application.Services.Posts
         Task DeletePost(int userId, int postId);
 
         Task UpdatePost(int userId, int postId, PostDto post);
+
+        Task LikePost(int userId, int postId);
     }
 }

@@ -95,5 +95,10 @@ namespace Application.Services.Posts
             await _postRepository.UpdatePost(userId, postId, result);
         }
 
+        public async Task LikePost(int userId, int postId)
+        {
+            await _postRepository.LikePost(userId, postId);
+        }
+
     }
 }
