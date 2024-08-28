@@ -100,5 +100,12 @@ namespace Application.Services.Posts
             await _postRepository.LikePost(userId, postId);
         }
 
+        public async Task<IEnumerable<Like>> GetLikesOfPost(int userId, int postId)
+        {
+            var likes = await _postRepository.GetLikesOfPost(userId, postId);
+
+            return likes;
+        }
+
     }
 }

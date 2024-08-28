@@ -1,4 +1,5 @@
 ﻿using Application.Dtos;
+using Domain.Entities;
 
 namespace Application.Services.Posts
 {
@@ -16,5 +17,7 @@ namespace Application.Services.Posts
         Task UpdatePost(int userId, int postId, PostDto post);
 
         Task LikePost(int userId, int postId);
+
+        Task<IEnumerable<Like>> GetLikesOfPost(int userId, int postId);
     }
 }
