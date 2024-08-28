@@ -58,5 +58,13 @@ namespace my_social_media.Controllers
             return Ok("Post updated successfully.");
         }
 
+        [HttpPost("LikePost")]
+        public async Task<IActionResult> LikePost(int postId)
+        {
+            await _postService.LikePost(UserId, postId);
+
+            return Ok("Post liked successfully.");
+        }
+
     }
 }
