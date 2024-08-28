@@ -113,5 +113,25 @@ namespace Infrastructure.Repositories
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
         }
 
+        public async Task<IEnumerable<Like>> GetLikesOfPost(int userId, int postId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("postId", postId);
+
+            var query = "SELECT l.Id, " +
+                "l.UserId, " +
+                "p.Username, " +
+                "l.CreatedAt " +
+                "FROM Likes l " +
+                "INNER JOIN Posts p " +
+                "ON p.UserId = l.UserId " +
+                "WHERE p.UserId = @userId AND p.Id = @postId";
+
+            var likes = await _dapperContext.Connection.QueryAsync<Like>(query, parameters);
+
+            return likes;
+        }
+
     }
 }
