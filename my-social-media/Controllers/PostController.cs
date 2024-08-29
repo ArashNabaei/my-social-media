@@ -58,5 +58,29 @@ namespace my_social_media.Controllers
             return Ok("Post updated successfully.");
         }
 
+        [HttpPost("LikePost")]
+        public async Task<IActionResult> LikePost(int postId)
+        {
+            await _postService.LikePost(UserId, postId);
+
+            return Ok("Post liked successfully.");
+        }
+
+        [HttpGet("GetLikesOfPost")]
+        public async Task<IActionResult> GetLikesOfPost(int postId)
+        {
+            var likes = await _postService.GetLikesOfPost(UserId, postId);
+
+            return Ok(likes);
+        }
+
+        [HttpGet("GetFriendsPosts")]
+        public async Task<IActionResult> GetFriendsPosts(int friendId)
+        {
+            var posts = await _postService.GetFriendsPosts(UserId, friendId);
+
+            return Ok(posts);
+        }
+
     }
 }

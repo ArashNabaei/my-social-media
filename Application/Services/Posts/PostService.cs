@@ -95,5 +95,29 @@ namespace Application.Services.Posts
             await _postRepository.UpdatePost(userId, postId, result);
         }
 
+        public async Task LikePost(int userId, int postId)
+        {
+            var post = await _postRepository.GetOthersPostById(userId, postId);
+
+            if (post == null)
+                throw PostException.PostNotFound();
+
+            await _postRepository.LikePost(userId, postId);
+        }
+
+        public async Task<IEnumerable<Like>> GetLikesOfPost(int userId, int postId)
+        {
+            var likes = await _postRepository.GetLikesOfPost(userId, postId);
+
+            return likes;
+        }
+
+        public async Task<IEnumerable<Post>> GetFriendsPosts(int userId, int friendId)
+        {
+            var posts = await _postRepository.GetFriendsPosts(userId, friendId);
+
+            return posts;
+        }
+
     }
 }
