@@ -18,6 +18,6 @@ namespace Domain.Repositories
 
         Task<IEnumerable<Like>> GetLikesOfPost(int userId, int postId);
 
-        Task<Post> GetOthersPostById(int userId, int id, int postId);
+        Task<Post> GetOthersPostById(int userId, int postId);
     }
 }
