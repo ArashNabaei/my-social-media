@@ -97,7 +97,7 @@ namespace Application.Services.Posts
 
         public async Task LikePost(int userId, int postId)
         {
-            var post = await _postRepository.GetPostById(userId, postId);
+            var post = await _postRepository.GetOthersPostById(userId, postId);
 
             if (post == null)
                 throw PostException.PostNotFound();
