@@ -17,5 +17,7 @@ namespace Domain.Repositories
         Task LikePost(int userId, int postId);
 
         Task<IEnumerable<Like>> GetLikesOfPost(int userId, int postId);
+
+        Task<Post> GetOthersPostById(int userId, int id, int postId);
     }
 }

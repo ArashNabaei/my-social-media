@@ -135,5 +135,29 @@ namespace Infrastructure.Repositories
             return likes;
         }
 
+        public async Task<Post> GetOthersPostById(int userId, int id, int postId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("postId", postId);
+            parameters.Add("id", id);
+
+            var query = "SELECT p.Id, " +
+                "p.UserId, " +
+                "p.Caption, " +
+                "p.ImageUrl, " +
+                "p.CreatedAt " +
+                "FROM Posts p " +
+                "INNER JOIN Follows f1 " +
+                "ON f1.FollowerId = @userId AND f1.FollowingId = @id " +
+                "INNER JOIN Follows f2 " +
+                "ON f2.FollowerId = @id AND f2.FollowingId = @userId " +
+                "WHERE p.Id = @postId AND p.UserId = @id";
+
+            var post = await _dapperContext.Connection.QueryFirstOrDefaultAsync<Post>(query, parameters);
+
+            return post;
+        }
+
     }
 }
