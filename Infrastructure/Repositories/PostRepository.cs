@@ -164,7 +164,11 @@ namespace Infrastructure.Repositories
             parameters.Add("userId", userId);
             parameters.Add("friendId", friendId);
 
-            var query = "SELECT * FROM Posts " +
+            var query = "SELECT p.Id, " +
+                "p.UserId, " +
+                "p.Caption, " +
+                "p.ImageUrl, " +
+                "p.CreationTime " +
                 "FROM Posts p " +
                 "INNER JOIN Follows f1 " +
                 "ON f1.FollowerId = @userId AND f1.FollowingId = p.UserId " +

@@ -74,5 +74,13 @@ namespace my_social_media.Controllers
             return Ok(likes);
         }
 
+        [HttpGet("GetFriendsPosts")]
+        public async Task<IActionResult> GetFriendsPosts(int friendId)
+        {
+            var posts = await _postService.GetFriendsPosts(UserId, friendId);
+
+            return Ok(posts);
+        }
+
     }
 }
