@@ -145,7 +145,7 @@ namespace Infrastructure.Repositories
                 "p.UserId, " +
                 "p.Caption, " +
                 "p.ImageUrl, " +
-                "p.CreatedAt " +
+                "p.CreationTime " +
                 "FROM Posts p " +
                 "INNER JOIN Follows f1 " +
                 "ON f1.FollowerId = @userId AND f1.FollowingId = p.UserId " +
