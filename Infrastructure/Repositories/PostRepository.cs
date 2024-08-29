@@ -158,5 +158,24 @@ namespace Infrastructure.Repositories
             return post;
         }
 
+        public async Task<IEnumerable<Post>> GetFriendsPosts(int userId, int friendId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("friendId", friendId);
+
+            var query = "SELECT * FROM Posts " +
+                "FROM Posts p " +
+                "INNER JOIN Follows f1 " +
+                "ON f1.FollowerId = @userId AND f1.FollowingId = p.UserId " +
+                "INNER JOIN Follows f2 " +
+                "ON f2.FollowerId = p.UserId AND f2.FollowingId = @userId " +
+                "WHERE p.UserId = @friendId";
+
+            var posts = await _dapperContext.Connection.QueryAsync<Post>(query, parameters);
+
+            return posts;
+        }
+
     }
 }
