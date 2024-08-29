@@ -112,5 +112,12 @@ namespace Application.Services.Posts
             return likes;
         }
 
+        public async Task<IEnumerable<Post>> GetFriendsPosts(int userId, int friendId)
+        {
+            var posts = await _postRepository.GetFriendsPosts(userId, friendId);
+
+            return posts;
+        }
+
     }
 }

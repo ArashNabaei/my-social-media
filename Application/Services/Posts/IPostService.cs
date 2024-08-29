@@ -19,5 +19,7 @@ namespace Application.Services.Posts
         Task LikePost(int userId, int postId);
 
         Task<IEnumerable<Like>> GetLikesOfPost(int userId, int postId);
+
+        Task<IEnumerable<Post>> GetFriendsPosts(int userId, int friendId);
     }
 }
