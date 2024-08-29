@@ -121,12 +121,14 @@ namespace Infrastructure.Repositories
 
             var query = "SELECT l.Id, " +
                 "l.UserId, " +
-                "p.Username, " +
+                "u.Username, " +
                 "l.CreatedAt " +
                 "FROM Likes l " +
+                "INNER JOIN Users u " +
+                "ON u.Id = l.UserId " +
                 "INNER JOIN Posts p " +
-                "ON p.UserId = l.UserId " +
-                "WHERE p.UserId = @userId AND p.Id = @postId";
+                "ON p.Id = l.PostId " +
+                "WHERE p.Id = @postId AND p.UserId = @userId";
 
             var likes = await _dapperContext.Connection.QueryAsync<Like>(query, parameters);
 
