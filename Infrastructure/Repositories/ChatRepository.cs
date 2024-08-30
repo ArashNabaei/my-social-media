@@ -76,5 +76,24 @@ namespace Infrastructure.Repositories
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
         }
 
+        public async Task<Message> GetMessagebyId(int userId, int messageId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("messageId", messageId);
+
+            var query = "SELECT Id, " +
+                "SenderId, " +
+                "ReceiverId, " +
+                "Content, " +
+                "CreatedAt " +
+                "FROM Messages " +
+                "WHERE SenderId = @userId AND Id = @messageId";
+
+            var message = await _dapperContext.Connection.QueryFirstOrDefaultAsync<Message>(query, parameters);
+
+            return message;
+        }
+
     }
 }
