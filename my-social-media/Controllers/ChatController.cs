@@ -41,5 +41,13 @@ namespace my_social_media.Controllers
             return Ok("Message deleted successfully.");
         }
 
+        [HttpPut("UpdateMessage")]
+        public async Task<IActionResult> UpdateMessage(int messageId, [FromBody] string message)
+        {
+            await _chatService.UpdateMessage(UserId,messageId, message);
+
+            return Ok("Message updated successfully.");
+        }
+
     }
 }
