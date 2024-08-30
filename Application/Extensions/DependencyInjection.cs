@@ -30,6 +30,7 @@ namespace Application.Extensions
             services.AddScoped<IProfileRepository, ProfileRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IFollowRepository, FollowRepository>();
+            services.AddScoped<IChatRepository, ChatRepository>();
 
             services.AddScoped<DapperContext>();
 
