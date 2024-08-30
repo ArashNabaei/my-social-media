@@ -82,5 +82,21 @@ namespace my_social_media.Controllers
             return Ok(posts);
         }
 
+        [HttpPost("LeaveCommentOnPost")]
+        public async Task<IActionResult> LeaveCommentOnPost(int postId, [FromBody] string comment)
+        {
+            await _postService.LeaveCommentOnPost(UserId, postId, comment);
+
+            return Ok("Comment added to post successfully.");
+        }
+
+        [HttpGet("GetCommentsOfPost")]
+        public async Task<IActionResult> GetCommentsOfPost(int postId)
+        {
+            var comments = await _postService.GetCommentsOfPost(UserId, postId);
+
+            return Ok(comments);
+        }
+
     }
 }

@@ -21,5 +21,9 @@ namespace Domain.Repositories
         Task<Post> GetOthersPostById(int userId, int postId);
 
         Task<IEnumerable<Post>> GetFriendsPosts(int userId, int friendId);
+
+        Task LeaveCommentOnPost(int userId, int postId, string comment);
+
+        Task<IEnumerable<Comment>> GetCommentsOfPost(int userId, int postId);
     }
 }

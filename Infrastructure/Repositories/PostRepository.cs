@@ -181,5 +181,43 @@ namespace Infrastructure.Repositories
             return posts;
         }
 
+        public async Task LeaveCommentOnPost(int userId, int postId, string comment)
+        {
+            var createdAt = DateTime.UtcNow;
+
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("postId", postId);
+            parameters.Add("comment", comment);
+            parameters.Add("createdAt", createdAt);
+
+            var query = "INSERT INTO Comments (UserId, PostId, Content, CreatedAt) " +
+                "VALUES (@userId, @postId, @comment, @createdAt)";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+        }
+
+        public async Task<IEnumerable<Comment>> GetCommentsOfPost(int userId, int postId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("postId", postId);
+
+            var query = "SELECT c.Id, " +
+                "c.UserId, " +
+                "u.Username, " +
+                "c.CreatedAt " +
+                "FROM Comments c " +
+                "INNER JOIN Users u " +
+                "ON u.Id = c.UserId " +
+                "INNER JOIN Posts p " +
+                "ON p.Id = c.PostId " +
+                "WHERE p.Id = @postId AND c.UserId = @userId";
+
+            var comments = await _dapperContext.Connection.QueryAsync<Comment>(query, parameters);
+
+            return comments;
+        }
+
     }
 }
