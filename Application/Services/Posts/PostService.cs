@@ -119,5 +119,15 @@ namespace Application.Services.Posts
             return posts;
         }
 
+        public async Task LeaveCommentOnPost(int userId, int postId, string comment)
+        {
+            var post = await _postRepository.GetOthersPostById(userId, postId);
+
+            if (post == null)
+                throw PostException.PostNotFound();
+
+            await _postRepository.LeaveCommentOnPost(userId, postId, comment);
+        }
+
     }
 }
