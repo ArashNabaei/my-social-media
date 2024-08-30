@@ -90,5 +90,13 @@ namespace my_social_media.Controllers
             return Ok("Comment added to post successfully.");
         }
 
+        [HttpGet("GetCommentsOfPost")]
+        public async Task<IActionResult> GetCommentsOfPost(int postId)
+        {
+            var comments = await _postService.GetCommentsOfPost(UserId, postId);
+
+            return Ok(comments);
+        }
+
     }
 }
