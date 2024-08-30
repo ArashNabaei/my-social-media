@@ -203,16 +203,16 @@ namespace Infrastructure.Repositories
             parameters.Add("userId", userId);
             parameters.Add("postId", postId);
 
-            var query = "SELECT C.Id, " +
-                "C.UserId, " +
+            var query = "SELECT c.Id, " +
+                "c.UserId, " +
                 "u.Username, " +
-                "C.CreatedAt " +
+                "c.CreatedAt " +
                 "FROM Comments c " +
                 "INNER JOIN Users u " +
                 "ON u.Id = c.UserId " +
                 "INNER JOIN Posts p " +
                 "ON p.Id = c.PostId " +
-                "WHERE p.Id = @postId AND p.UserId = @userId";
+                "WHERE p.Id = @postId AND c.UserId = @userId";
 
             var comments = await _dapperContext.Connection.QueryAsync<Comment>(query, parameters);
 
