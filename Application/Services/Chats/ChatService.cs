@@ -1,4 +1,5 @@
-﻿using Domain.Repositories;
+﻿using Domain.Entities;
+using Domain.Repositories;
 
 namespace Application.Services.Chats
 {
@@ -15,6 +16,13 @@ namespace Application.Services.Chats
         public async Task SendMessage(int senderId, int receiverId, string message)
         {
             await _chatRepository.SendMessage(senderId, receiverId, message);
+        }
+
+        public async Task<IEnumerable<Message>> GetAllMessages(int userId, int id)
+        {
+            var messages = await _chatRepository.GetAllMessages(userId, id);
+
+            return messages;
         }
 
     }
