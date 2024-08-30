@@ -23,5 +23,7 @@ namespace Application.Services.Posts
         Task<IEnumerable<Post>> GetFriendsPosts(int userId, int friendId);
 
         Task LeaveCommentOnPost(int userId, int postId, string comment);
+
+        Task<IEnumerable<Comment>> GetAllCommentsOfPost(int userId, int postId);
     }
 }
