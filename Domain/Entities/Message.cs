@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class Chat
+    public class Message
     {
         public int Id { get; set; }
 
