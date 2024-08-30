@@ -30,5 +30,10 @@ namespace Application.Services.Chats
             await _chatRepository.DeleteMessage(userId, messageId);
         }
 
+        public async Task UpdateMessage(int userId, int messageId, string message)
+        {
+            await _chatRepository.UpdateMessage(userId, messageId, message);
+        }
+
     }
 }
