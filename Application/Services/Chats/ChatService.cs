@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Shared.Exceptions.Chats;
 
 namespace Application.Services.Chats
 {
@@ -27,11 +28,21 @@ namespace Application.Services.Chats
 
         public async Task DeleteMessage(int userId, int messageId)
         {
+            var message = await _chatRepository.GetMessagebyId(userId, messageId);
+
+            if (message == null)
+                throw ChatException.MessageNotFound();
+
             await _chatRepository.DeleteMessage(userId, messageId);
         }
 
         public async Task UpdateMessage(int userId, int messageId, string message)
         {
+            var foundedMessage = await _chatRepository.GetMessagebyId(userId, messageId);
+
+            if (foundedMessage == null)
+                throw ChatException.MessageNotFound();
+
             await _chatRepository.UpdateMessage(userId, messageId, message);
         }
 
