@@ -129,5 +129,12 @@ namespace Application.Services.Posts
             await _postRepository.LeaveCommentOnPost(userId, postId, comment);
         }
 
+        public async Task<IEnumerable<Comment>> GetCommentsOfPost(int userId, int postId)
+        {
+            var comments = await _postRepository.GetCommentsOfPost(userId, postId);
+
+            return comments;
+        }
+
     }
 }

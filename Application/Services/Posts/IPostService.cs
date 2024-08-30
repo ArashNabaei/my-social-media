@@ -24,6 +24,6 @@ namespace Application.Services.Posts
 
         Task LeaveCommentOnPost(int userId, int postId, string comment);
 
-        Task<IEnumerable<Comment>> GetAllCommentsOfPost(int userId, int postId);
+        Task<IEnumerable<Comment>> GetCommentsOfPost(int userId, int postId);
     }
 }
