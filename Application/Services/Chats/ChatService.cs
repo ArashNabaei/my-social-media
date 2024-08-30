@@ -25,5 +25,10 @@ namespace Application.Services.Chats
             return messages;
         }
 
+        public async Task DeleteMessage(int userId, int messageId)
+        {
+            await _chatRepository.DeleteMessage(userId, messageId);
+        }
+
     }
 }
