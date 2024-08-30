@@ -62,5 +62,19 @@ namespace Infrastructure.Repositories
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
         }
 
+        public async Task UpdateMessage(int userId, int messageId, string message)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("messageId", messageId);
+            parameters.Add("message", message);
+
+            var query = "UPDATE Messages " +
+                "SET Content = @message " +
+                "WHERE SenderId = @userId AND Id = @messageId AND IsDeleted = 0";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+        }
+
     }
 }
