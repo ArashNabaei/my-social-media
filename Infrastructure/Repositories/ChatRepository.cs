@@ -41,12 +41,25 @@ namespace Infrastructure.Repositories
                 "m.Content, " +
                 "m.CreatedAt " +
                 "FROM Messages m " +
-                "WHERE (m.SenderId = @userId AND m.ReceiverId = @id) " +
-                "OR (m.ReceiverId = @userId AND m.SenderId = @id)";
+                "WHERE (m.SenderId = @userId AND m.ReceiverId = @id AND IsDeleted = 0) " +
+                "OR (m.ReceiverId = @userId AND m.SenderId = @id AND IsDeleted = 0)";
 
             var messages = await _dapperContext.Connection.QueryAsync<Message>(query, parameters);
 
             return messages;
+        }
+
+        public async Task DeleteMessage(int userId, int messageId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("messageId", messageId);
+
+            var query = "UPDATE Messages " +
+                "SET IsDeleted = 1 " +
+                "WHERE SenderId = @userId AND Id = @messageId";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
         }
 
     }
