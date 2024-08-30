@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Domain.Entities;
 using Domain.Repositories;
 
 namespace Infrastructure.Repositories
@@ -26,6 +27,26 @@ namespace Infrastructure.Repositories
                 "VALUES (@senderId, @receiverid, @message, @createdAt, 0)";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
+        }
+
+        public async Task<IEnumerable<Message>> GetAllMessages(int userId, int id)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("id", id);
+
+            var query = "SELECT m.Id, " +
+                "m.SenderId, " +
+                "m.ReceiverId, " +
+                "m.Content, " +
+                "m.CreatedAt " +
+                "FROM Messages m " +
+                "WHERE (m.SenderId = @userId AND m.ReceiverId = @id) " +
+                "OR (m.ReceiverId = @userId AND m.SenderId = @id)";
+
+            var messages = await _dapperContext.Connection.QueryAsync<Message>(query, parameters);
+
+            return messages;
         }
 
     }
