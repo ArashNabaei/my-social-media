@@ -33,5 +33,13 @@ namespace my_social_media.Controllers
             return Ok(messages);
         }
 
+        [HttpDelete("DeleteMessage")]
+        public async Task<IActionResult> DeleteMessage(int messageId)
+        {
+            await _chatService.DeleteMessage(UserId, messageId);
+
+            return Ok("Message deleted successfully.");
+        }
+
     }
 }
