@@ -25,5 +25,13 @@ namespace my_social_media.Controllers
             return Ok("Message sent successfully.");
         }
 
+        [HttpGet("GetAllMessages")]
+        public async Task<IActionResult> GetAllMessages(int id)
+        {
+            var messages = await _chatService.GetAllMessages(UserId, id);
+
+            return Ok(messages);
+        }
+
     }
 }
