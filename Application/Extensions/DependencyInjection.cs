@@ -1,4 +1,5 @@
 ﻿using Application.Services.Accounts;
+using Application.Services.Chats;
 using Application.Services.Follows;
 using Application.Services.Posts;
 using Application.Services.Profiles;
@@ -18,6 +19,7 @@ namespace Application.Extensions
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IFollowService, FollowService>();
+            services.AddScoped<IChatService, ChatService>();
 
             return services;
         }
