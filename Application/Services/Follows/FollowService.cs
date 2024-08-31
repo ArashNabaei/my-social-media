@@ -21,7 +21,7 @@ namespace Application.Services.Follows
         {
             var friends = await _followRepository.GetAllFriends(userId);
 
-            _logger.LogInformation($"User with id {userId} saw all friends.");
+            _logger.LogInformation($"User with id {userId} saw all his friends.");
 
             var result = friends.Select(friend => new UserDto
             {
@@ -39,7 +39,7 @@ namespace Application.Services.Follows
         {
             var followers = await _followRepository.GetAllFollowers(userId);
 
-            _logger.LogInformation($"User with id {userId} saw all followers.");
+            _logger.LogInformation($"User with id {userId} saw all his followers.");
 
             var result = followers.Select(follower => new UserDto
             {
@@ -57,7 +57,7 @@ namespace Application.Services.Follows
         {
             var followings = await _followRepository.GetAllFollowings(userId);
 
-            _logger.LogInformation($"User with id {userId} saw all followings.");
+            _logger.LogInformation($"User with id {userId} saw all his followings.");
 
             var result = followings.Select(following => new UserDto
             {
@@ -75,6 +75,8 @@ namespace Application.Services.Follows
         {
             var follower = await _followRepository.GetFollowerById(userId, followerId);
 
+            _logger.LogInformation($"User with id {userId} saw his follower with id {followerId}.");
+
             var result = new UserDto
             {
                 Id = follower.Id,
@@ -90,6 +92,8 @@ namespace Application.Services.Follows
         public async Task<UserDto> GetFollowingById(int userId, int followingId)
         {
             var following = await _followRepository.GetFollowingById(userId, followingId);
+
+            _logger.LogInformation($"User with id {userId} saw his following with id {followingId}.");
 
             var result = new UserDto
             {
