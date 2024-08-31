@@ -134,6 +134,8 @@ namespace Application.Services.Follows
         public async Task Follow(int userId, int id)
         {
             await _followRepository.Follow(userId, id);
+
+            _logger.LogInformation($"User with id {userId} followed user with id {id}.");
         }
 
     }
