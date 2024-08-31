@@ -39,6 +39,8 @@ namespace Application.Services.Follows
         {
             var followers = await _followRepository.GetAllFollowers(userId);
 
+            _logger.LogInformation($"User with id {userId} saw all followers.");
+
             var result = followers.Select(follower => new UserDto
             {
                 Id = follower.Id,
@@ -54,6 +56,8 @@ namespace Application.Services.Follows
         public async Task<IEnumerable<UserDto>> GetAllFollowings(int userId)
         {
             var followings = await _followRepository.GetAllFollowings(userId);
+
+            _logger.LogInformation($"User with id {userId} saw all followings.");
 
             var result = followings.Select(following => new UserDto
             {
