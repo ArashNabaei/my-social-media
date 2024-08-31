@@ -68,8 +68,8 @@ namespace Application.Extensions
         public static IServiceCollection AddCustomLogging(this IServiceCollection services, IConfiguration configuration)
         {
             Log.Logger = new LoggerConfiguration()
-        .ReadFrom.Configuration(configuration)
-        .CreateLogger();
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
 
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
