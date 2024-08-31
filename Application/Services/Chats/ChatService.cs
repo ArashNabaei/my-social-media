@@ -54,6 +54,8 @@ namespace Application.Services.Chats
                 throw ChatException.MessageNotFound();
 
             await _chatRepository.UpdateMessage(userId, messageId, message);
+
+            _logger.LogInformation($"User with id {userId} updated message with id {messageId}.");
         }
 
     }
