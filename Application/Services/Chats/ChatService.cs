@@ -22,12 +22,14 @@ namespace Application.Services.Chats
         {
             await _chatRepository.SendMessage(senderId, receiverId, message);
 
-            _logger.LogInformation($"User with Id {senderId} sent message to user with Id {receiverId}");
+            _logger.LogInformation($"User with Id {senderId} sent message to user with Id {receiverId}.");
         }
 
         public async Task<IEnumerable<Message>> GetAllMessages(int userId, int id)
         {
             var messages = await _chatRepository.GetAllMessages(userId, id);
+
+            _logger.LogInformation($"User with id {userId} saw all messages of chat with user with id {id}.");
 
             return messages;
         }
