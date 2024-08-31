@@ -127,6 +127,8 @@ namespace Application.Services.Follows
                 throw FollowException.FollowingNotFound();
 
             await _followRepository.RemoveFollowing(userId, followingId);
+
+            _logger.LogInformation($"User with id {userId} removed his following with id {followingId}.");
         }
 
         public async Task Follow(int userId, int id)
