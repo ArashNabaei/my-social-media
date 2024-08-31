@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Microsoft.Extensions.Logging;
 using Shared.Exceptions.Profiles;
 
 namespace Application.Services.Profiles
@@ -9,9 +10,12 @@ namespace Application.Services.Profiles
 
         private readonly IProfileRepository _profileRepository;
 
-        public ProfileService(IProfileRepository profileRepository)
+        private readonly ILogger<ProfileService> _logger;
+
+        public ProfileService(IProfileRepository profileRepository, ILogger<ProfileService> logger)
         {
             _profileRepository = profileRepository;
+            _logger = logger;
         }
 
         public async Task<User> GetProfile(int id)
@@ -20,6 +24,8 @@ namespace Application.Services.Profiles
 
             if (user == null)
                 throw ProfileException.ProfileNotFound();
+
+            _logger.LogInformation($"User with id {id} saw his profile.");
 
             return user;
         }
@@ -30,6 +36,8 @@ namespace Application.Services.Profiles
                 throw ProfileException.InvalidProfileData();
 
             await _profileRepository.UpdateProfile(id, user);
+
+            _logger.LogInformation($"User with id {id} updated his profile.");
         }
 
     }
