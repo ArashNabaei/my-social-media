@@ -42,6 +42,8 @@ namespace Application.Services.Chats
                 throw ChatException.MessageNotFound();
 
             await _chatRepository.DeleteMessage(userId, messageId);
+
+            _logger.LogInformation($"User with id {userId} deleted message with id {messageId}.");
         }
 
         public async Task UpdateMessage(int userId, int messageId, string message)
