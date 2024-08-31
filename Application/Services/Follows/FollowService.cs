@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Domain.Repositories;
+using Microsoft.Extensions.Logging;
 using Shared.Exceptions.Follows;
 
 namespace Application.Services.Follows
@@ -8,14 +9,19 @@ namespace Application.Services.Follows
     {
         private readonly IFollowRepository _followRepository;
 
-        public FollowService(IFollowRepository followRepository)
+        private readonly ILogger<FollowService> _logger;
+
+        public FollowService(IFollowRepository followRepository, ILogger<FollowService> logger)
         {
             _followRepository = followRepository;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<UserDto>> GetAllFriends(int userId) 
         {
             var friends = await _followRepository.GetAllFriends(userId);
+
+            _logger.LogInformation($"User with id {userId} saw all friends.");
 
             var result = friends.Select(friend => new UserDto
             {

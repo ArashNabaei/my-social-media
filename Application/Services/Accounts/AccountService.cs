@@ -68,7 +68,7 @@ namespace Application.Services.Accounts
             if (user == null)
                 throw AccountException.UserNotFound();
 
-            _logger.LogInformation($"User with Id {user.Id} has signed in.");
+            _logger.LogInformation($"User with Id {user.Id} signed in.");
 
             return user.Id;
         }
