@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Microsoft.Extensions.Logging;
 using Shared.Exceptions.Chats;
 
 namespace Application.Services.Chats
@@ -9,14 +10,19 @@ namespace Application.Services.Chats
 
         private readonly IChatRepository _chatRepository;
 
-        public ChatService(IChatRepository chatRepository)
+        private readonly ILogger<ChatService> _logger;
+
+        public ChatService(IChatRepository chatRepository, ILogger<ChatService> logger)
         {
             _chatRepository = chatRepository;
+            _logger = logger;
         }
 
         public async Task SendMessage(int senderId, int receiverId, string message)
         {
             await _chatRepository.SendMessage(senderId, receiverId, message);
+
+            _logger.LogInformation($"User with Id {senderId} sent message to user with Id {receiverId}");
         }
 
         public async Task<IEnumerable<Message>> GetAllMessages(int userId, int id)
