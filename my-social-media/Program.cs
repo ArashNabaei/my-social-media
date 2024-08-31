@@ -38,6 +38,8 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddCustomLogging(builder.Configuration);
 
+builder.Services.AddTransient<LoggingMiddleware>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
