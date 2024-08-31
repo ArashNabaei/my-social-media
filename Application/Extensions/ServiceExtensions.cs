@@ -67,7 +67,22 @@ namespace Application.Extensions
 
         public static IServiceCollection AddCustomLogging(this IServiceCollection services, IConfiguration configuration)
         {
-            Log.Logger = new LoggerConfiguration()
+            var globalLogger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.MSSqlServer(
+                    connectionString: configuration.GetConnectionString("DefaultConnection"),
+                    sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions
+                    {
+                        TableName = "GlobalLogs",
+                        AutoCreateSqlTable = true
+                    },
+                    restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information
+                )
+                .CreateLogger();
+
+            var actionLogger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
@@ -77,14 +92,20 @@ namespace Application.Extensions
                     {
                         TableName = "Logs",
                         AutoCreateSqlTable = true
-                    }
+                    },
+                    restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information
                 )
                 .CreateLogger();
 
-            services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddSerilog(globalLogger, dispose: true);
+                loggingBuilder.AddSerilog(actionLogger, dispose: true);
+            });
 
             return services;
         }
+
 
     }
 }
