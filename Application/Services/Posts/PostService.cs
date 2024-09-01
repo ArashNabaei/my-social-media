@@ -118,7 +118,7 @@ namespace Application.Services.Posts
 
             await _postRepository.LikePost(userId, postId);
 
-            _logger.LogInformation($"User with id {userId} likes post with id {postId}.");
+            _logger.LogInformation($"User with id {userId} liked post with id {postId}.");
         }
 
         public async Task<IEnumerable<Like>> GetLikesOfPost(int userId, int postId)
