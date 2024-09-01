@@ -7,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
+builder.Services.AddTransient<ExceptionHandlingMiddleware>();
+// builder.Services.AddTransient<LoggingMiddleware>();
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -38,8 +41,6 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddCustomLogging(builder.Configuration);
 
-// builder.Services.AddTransient<LoggingMiddleware>();
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -53,7 +54,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// app.UseMiddleware<LoggingMiddleware>();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 
