@@ -8,7 +8,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
-// builder.Services.AddTransient<LoggingMiddleware>();
+builder.Services.AddTransient<LoggingMiddleware>();
 
 builder.Services.AddControllers();
 
@@ -55,6 +55,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<LoggingMiddleware>();
 
 app.MapControllers();
 
