@@ -1,4 +1,5 @@
 ﻿using Application.Dtos;
+using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -34,7 +35,11 @@ namespace Application.Services.Accounts
             var existingUser = await _accountRepository.GetUserByUsernameAndPassword(username, password);
 
             if (existingUser != null)
+            {
+                _logger.LogError($"User tried to create an existing user with id {existingUser.Id}.");
+
                 throw AccountException.UserAlreadyExists();
+            }
 
             await _accountRepository.CreateUser(username, password);
 
@@ -64,9 +69,13 @@ namespace Application.Services.Accounts
         public async Task<int> ValidateUser(string username, string password)
         {
             var user = await _accountRepository.GetUserByUsernameAndPassword(username, password);
-            
+
             if (user == null)
+            {
+                _logger.LogError($"User tried to sign in with non-existent username {username} and password {password}.");
+
                 throw AccountException.UserNotFound();
+            }
 
             _logger.LogInformation($"User with Id {user.Id} signed in.");
 
