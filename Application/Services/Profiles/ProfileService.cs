@@ -28,6 +28,7 @@ namespace Application.Services.Profiles
 
                 throw ProfileException.ProfileNotFound();
             }
+
             _logger.LogInformation($"User with id {id} saw his profile.");
 
             return user;
@@ -41,6 +42,7 @@ namespace Application.Services.Profiles
 
                 throw ProfileException.InvalidProfileData();
             }
+
             await _profileRepository.UpdateProfile(id, user);
 
             _logger.LogInformation($"User with id {id} updated his profile.");
