@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using Domain.Repositories;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Exceptions.Accounts;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,10 +17,13 @@ namespace Application.Services.Accounts
 
         private readonly IConfiguration _configuration;
 
-        public AccountService(IAccountRepository accountRepository, IConfiguration configuration)
+        private readonly ILogger<AccountService> _logger;
+
+        public AccountService(IAccountRepository accountRepository, IConfiguration configuration, ILogger<AccountService> logger)
         {
             _accountRepository = accountRepository;
             _configuration = configuration;
+            _logger = logger;
         }
 
         public async Task CreateUser(AccountDto user)
@@ -33,6 +37,8 @@ namespace Application.Services.Accounts
                 throw AccountException.UserAlreadyExists();
 
             await _accountRepository.CreateUser(username, password);
+
+            _logger.LogInformation("New user signed up.");
         }
 
         public string GenerateToken(int userId)
@@ -61,6 +67,8 @@ namespace Application.Services.Accounts
             
             if (user == null)
                 throw AccountException.UserNotFound();
+
+            _logger.LogInformation($"User with Id {user.Id} signed in.");
 
             return user.Id;
         }

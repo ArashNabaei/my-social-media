@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Domain.Repositories;
+using Microsoft.Extensions.Logging;
 using Shared.Exceptions.Follows;
 
 namespace Application.Services.Follows
@@ -8,14 +9,19 @@ namespace Application.Services.Follows
     {
         private readonly IFollowRepository _followRepository;
 
-        public FollowService(IFollowRepository followRepository)
+        private readonly ILogger<FollowService> _logger;
+
+        public FollowService(IFollowRepository followRepository, ILogger<FollowService> logger)
         {
             _followRepository = followRepository;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<UserDto>> GetAllFriends(int userId) 
         {
             var friends = await _followRepository.GetAllFriends(userId);
+
+            _logger.LogInformation($"User with id {userId} saw all his friends.");
 
             var result = friends.Select(friend => new UserDto
             {
@@ -33,6 +39,8 @@ namespace Application.Services.Follows
         {
             var followers = await _followRepository.GetAllFollowers(userId);
 
+            _logger.LogInformation($"User with id {userId} saw all his followers.");
+
             var result = followers.Select(follower => new UserDto
             {
                 Id = follower.Id,
@@ -48,6 +56,8 @@ namespace Application.Services.Follows
         public async Task<IEnumerable<UserDto>> GetAllFollowings(int userId)
         {
             var followings = await _followRepository.GetAllFollowings(userId);
+
+            _logger.LogInformation($"User with id {userId} saw all his followings.");
 
             var result = followings.Select(following => new UserDto
             {
@@ -65,6 +75,8 @@ namespace Application.Services.Follows
         {
             var follower = await _followRepository.GetFollowerById(userId, followerId);
 
+            _logger.LogInformation($"User with id {userId} saw his follower with id {followerId}.");
+
             var result = new UserDto
             {
                 Id = follower.Id,
@@ -80,6 +92,8 @@ namespace Application.Services.Follows
         public async Task<UserDto> GetFollowingById(int userId, int followingId)
         {
             var following = await _followRepository.GetFollowingById(userId, followingId);
+
+            _logger.LogInformation($"User with id {userId} saw his following with id {followingId}.");
 
             var result = new UserDto
             {
@@ -101,6 +115,8 @@ namespace Application.Services.Follows
                 throw FollowException.FollowerNotFound();
 
             await _followRepository.RemoveFollower(userId, followerId);
+
+            _logger.LogInformation($"User with id {userId} removed his follower with id {followerId}.");
         }
 
         public async Task RemoveFollowing(int userId, int followingId)
@@ -111,11 +127,15 @@ namespace Application.Services.Follows
                 throw FollowException.FollowingNotFound();
 
             await _followRepository.RemoveFollowing(userId, followingId);
+
+            _logger.LogInformation($"User with id {userId} removed his following with id {followingId}.");
         }
 
         public async Task Follow(int userId, int id)
         {
             await _followRepository.Follow(userId, id);
+
+            _logger.LogInformation($"User with id {userId} followed user with id {id}.");
         }
 
     }
