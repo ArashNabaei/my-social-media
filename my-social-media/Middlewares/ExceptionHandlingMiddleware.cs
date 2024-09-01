@@ -11,6 +11,21 @@ namespace my_social_media.Middlewares
             _logger = logger;
         }
 
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        {
+            try
+            {
+                await next(context);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An exception occurred while executing the request");
+                
+                await HandleExceptionAsync(context, ex);
+            }
+
+        }
+
         private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
