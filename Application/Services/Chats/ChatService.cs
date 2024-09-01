@@ -39,7 +39,11 @@ namespace Application.Services.Chats
             var message = await _chatRepository.GetMessagebyId(userId, messageId);
 
             if (message == null)
+            {
+                _logger.LogError($"User with id {userId} tried to delete a non-existent message with id {messageId}.");
+
                 throw ChatException.MessageNotFound();
+            }
 
             await _chatRepository.DeleteMessage(userId, messageId);
 
@@ -51,7 +55,11 @@ namespace Application.Services.Chats
             var foundedMessage = await _chatRepository.GetMessagebyId(userId, messageId);
 
             if (foundedMessage == null)
+            {
+                _logger.LogError($"User with id {userId} tried to update a non-existent message with id {messageId}.");
+
                 throw ChatException.MessageNotFound();
+            }
 
             await _chatRepository.UpdateMessage(userId, messageId, message);
 

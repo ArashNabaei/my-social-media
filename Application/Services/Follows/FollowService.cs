@@ -1,4 +1,5 @@
 ﻿using Application.Dtos;
+using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using Shared.Exceptions.Follows;
@@ -75,6 +76,13 @@ namespace Application.Services.Follows
         {
             var follower = await _followRepository.GetFollowerById(userId, followerId);
 
+            if (follower == null)
+            {
+                _logger.LogError($"User with id {userId} tried to access a non-existent follower with id {followerId}.");
+
+                throw FollowException.FollowerNotFound();
+            }
+
             _logger.LogInformation($"User with id {userId} saw his follower with id {followerId}.");
 
             var result = new UserDto
@@ -92,6 +100,13 @@ namespace Application.Services.Follows
         public async Task<UserDto> GetFollowingById(int userId, int followingId)
         {
             var following = await _followRepository.GetFollowingById(userId, followingId);
+
+            if (following == null)
+            {
+                _logger.LogError($"User with id {userId} tried to access a non-existent following with id {followingId}.");
+
+                throw FollowException.FollowingNotFound();
+            }
 
             _logger.LogInformation($"User with id {userId} saw his following with id {followingId}.");
 
@@ -112,7 +127,11 @@ namespace Application.Services.Follows
             var follower = await _followRepository.GetFollowerById(userId, followerId);
 
             if (follower == null)
+            {
+                _logger.LogError($"User with id {userId} tried to remove a non-existent follower with id {followerId}.");
+
                 throw FollowException.FollowerNotFound();
+            }
 
             await _followRepository.RemoveFollower(userId, followerId);
 
@@ -124,7 +143,11 @@ namespace Application.Services.Follows
             var following = await _followRepository.GetFollowingById(userId, followingId);
 
             if (following == null)
+            {
+                _logger.LogError($"User with id {userId} tried to remove a non-existent following with id {followingId}.");
+
                 throw FollowException.FollowingNotFound();
+            }
 
             await _followRepository.RemoveFollowing(userId, followingId);
 

@@ -40,6 +40,13 @@ namespace Application.Services.Posts
         {
             var post = await _postRepository.GetPostById(userId, postId);
 
+            if (post == null)
+            {
+                _logger.LogError($"User with id {userId} tried to access a non-existent post with id {postId}.");
+                
+                throw PostException.PostNotFound();
+            }
+
             _logger.LogInformation($"User with id {userId} saw his post with id {postId}.");
 
             var result = new PostDto
@@ -78,7 +85,11 @@ namespace Application.Services.Posts
             var post = await GetPostById(userId, postId);
 
             if (post == null)
+            {
+                _logger.LogError($"User with id {userId} tried to delete a non-existent post with id {postId}.");
+
                 throw PostException.PostNotFound();
+            }
 
             await _postRepository.DeletePost(userId, postId);
 
@@ -90,7 +101,11 @@ namespace Application.Services.Posts
             var foundedPost = await GetPostById(userId, postId);
 
             if (foundedPost == null)
+            {
+                _logger.LogError($"User with id {userId} tried to update a non-existent post with id {postId}.");
+
                 throw PostException.PostNotFound();
+            }
 
             var caption = post.Caption;
             var imageUrl = post.ImageUrl;
@@ -114,7 +129,11 @@ namespace Application.Services.Posts
             var post = await _postRepository.GetOthersPostById(userId, postId);
 
             if (post == null)
+            {
+                _logger.LogError($"User with id {userId} tried to like a non-existent post with id {postId}.");
+
                 throw PostException.PostNotFound();
+            }
 
             await _postRepository.LikePost(userId, postId);
 
@@ -144,7 +163,11 @@ namespace Application.Services.Posts
             var post = await _postRepository.GetOthersPostById(userId, postId);
 
             if (post == null)
+            {
+                _logger.LogError($"User with id {userId} tried to leave comment on a non-existent post with id {postId}.");
+
                 throw PostException.PostNotFound();
+            }
 
             await _postRepository.LeaveCommentOnPost(userId, postId, comment);
 
