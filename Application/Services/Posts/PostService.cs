@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using Domain.Entities;
 using Domain.Repositories;
+using Microsoft.Extensions.Logging;
 using Shared.Exceptions.Posts;
 
 namespace Application.Services.Posts
@@ -10,14 +11,19 @@ namespace Application.Services.Posts
 
         private readonly IPostRepository _postRepository;
 
-        public PostService(IPostRepository postRepository)
+        private readonly ILogger<PostService> _logger;
+
+        public PostService(IPostRepository postRepository, ILogger<PostService> logger)
         {
             _postRepository = postRepository;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<PostDto>> GetAllPosts(int userId)
         {
             var posts = await _postRepository.GetAllPosts(userId);
+
+            _logger.LogInformation($"User with id {userId} saw all his posts.");
 
             var result = posts.Select(post => new PostDto
             {
@@ -33,6 +39,8 @@ namespace Application.Services.Posts
         public async Task<PostDto> GetPostById(int userId, int postId)
         {
             var post = await _postRepository.GetPostById(userId, postId);
+
+            _logger.LogInformation($"User with id {userId} saw his post with id {postId}.");
 
             var result = new PostDto
             {
@@ -60,6 +68,8 @@ namespace Application.Services.Posts
             };
 
             await _postRepository.CreatePost(userId, result);
+
+            _logger.LogInformation($"User with id {userId} created new post.");
         }
 
 
@@ -71,6 +81,8 @@ namespace Application.Services.Posts
                 throw PostException.PostNotFound();
 
             await _postRepository.DeletePost(userId, postId);
+
+            _logger.LogInformation($"User with id {userId} deleted his post with id {postId}.");
         }
 
         public async Task UpdatePost(int userId, int postId, PostDto post)
@@ -93,6 +105,8 @@ namespace Application.Services.Posts
             };
 
             await _postRepository.UpdatePost(userId, postId, result);
+
+            _logger.LogInformation($"User with id {userId} updated his post with id {postId}.");
         }
 
         public async Task LikePost(int userId, int postId)
