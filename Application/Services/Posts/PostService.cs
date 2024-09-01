@@ -117,6 +117,8 @@ namespace Application.Services.Posts
                 throw PostException.PostNotFound();
 
             await _postRepository.LikePost(userId, postId);
+
+            _logger.LogInformation($"User with id {userId} likes post with id {postId}.");
         }
 
         public async Task<IEnumerable<Like>> GetLikesOfPost(int userId, int postId)
