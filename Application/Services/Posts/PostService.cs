@@ -125,6 +125,8 @@ namespace Application.Services.Posts
         {
             var likes = await _postRepository.GetLikesOfPost(userId, postId);
 
+            _logger.LogInformation($"User with id {userId} saw likes of post with id {postId}.");
+
             return likes;
         }
 
