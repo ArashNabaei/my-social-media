@@ -134,6 +134,8 @@ namespace Application.Services.Posts
         {
             var posts = await _postRepository.GetFriendsPosts(userId, friendId);
 
+            _logger.LogInformation($"User with id {userId} saw his friend's posts with id {friendId}.");
+
             return posts;
         }
 
