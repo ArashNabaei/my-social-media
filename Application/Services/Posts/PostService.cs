@@ -147,11 +147,15 @@ namespace Application.Services.Posts
                 throw PostException.PostNotFound();
 
             await _postRepository.LeaveCommentOnPost(userId, postId, comment);
+
+            _logger.LogInformation($"User with id {userId} left a comment on post with id {postId}.");
         }
 
         public async Task<IEnumerable<Comment>> GetCommentsOfPost(int userId, int postId)
         {
             var comments = await _postRepository.GetCommentsOfPost(userId, postId);
+
+            _logger.LogInformation($"User with id {userId} saw all comments of post with id {postId}.");
 
             return comments;
         }
