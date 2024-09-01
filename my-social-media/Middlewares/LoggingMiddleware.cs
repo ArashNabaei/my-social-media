@@ -11,18 +11,13 @@
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            try
-            {
-                _logger.LogInformation("Handling request: {Method} {Path}", context.Request.Method, context.Request.Path);
 
-                await next(context);
+            _logger.LogInformation("Handling request: {Method} {Path}", context.Request.Method, context.Request.Path);
 
-                _logger.LogInformation("Finished handling request: {Method} {Path}", context.Request.Method, context.Request.Path);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An exception occurred while handling the request");
-            }
+            await next(context);
+
+            _logger.LogInformation("Finished handling request: {Method} {Path}", context.Request.Method, context.Request.Path);
+
         }
     }
 }
