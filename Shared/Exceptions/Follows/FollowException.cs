@@ -18,7 +18,12 @@
 
         public static FollowException NoFriendsFound()
         {
-            return new FollowException(5001, "No friends found.");
+            return new FollowException(5003, "No friends found.");
+        }
+
+        public static FollowException NoFollowersFound()
+        {
+            return new FollowException(5004, "No followers found.");
         }
 
 
