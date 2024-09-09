@@ -24,7 +24,7 @@ namespace Infrastructure.Repositories
                     Posts.Id,
                     Posts.ImageUrl,
                     Posts.Caption,
-                    Posts.CreationTime
+                    Posts.CreatedAt
                   FROM Posts
                   INNER JOIN Users ON Posts.UserId = Users.Id
                   WHERE Posts.UserId = @userId AND IsDeleted = 0";
@@ -45,7 +45,7 @@ namespace Infrastructure.Repositories
                     Posts.Id,
                     Posts.ImageUrl,
                     Posts.Caption,
-                    Posts.CreationTime
+                    Posts.CreatedAt
                   FROM Posts
                   INNER JOIN Users ON Posts.UserId = Users.Id
                   WHERE Posts.UserId = @userId AND Posts.Id = @postId AND IsDeleted = 0";
@@ -60,11 +60,11 @@ namespace Infrastructure.Repositories
             var parameters = new DynamicParameters();
             parameters.Add("caption", post.Caption);
             parameters.Add("imageUrl", post.ImageUrl);
-            parameters.Add("creationTime", post.CreationTime);
+            parameters.Add("createdAt", post.CreatedAt);
             parameters.Add("userId", userId);
 
-            var query = "INSERT INTO Posts (Caption, ImageUrl, CreationTime, UserId, IsDeleted) " +
-                "VALUES (@caption, @imageUrl, @creationTime, @userId, 0)";
+            var query = "INSERT INTO Posts (Caption, ImageUrl, CreatedAt, UserId, IsDeleted) " +
+                "VALUES (@caption, @imageUrl, @createdAt, @userId, 0)";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
 
@@ -145,7 +145,7 @@ namespace Infrastructure.Repositories
                 "p.UserId, " +
                 "p.Caption, " +
                 "p.ImageUrl, " +
-                "p.CreationTime " +
+                "p.CreatedAt " +
                 "FROM Posts p " +
                 "INNER JOIN Follows f1 " +
                 "ON f1.FollowerId = @userId AND f1.FollowingId = p.UserId " +
@@ -168,7 +168,7 @@ namespace Infrastructure.Repositories
                 "p.UserId, " +
                 "p.Caption, " +
                 "p.ImageUrl, " +
-                "p.CreationTime " +
+                "p.CreatedAt " +
                 "FROM Posts p " +
                 "INNER JOIN Follows f1 " +
                 "ON f1.FollowerId = @userId AND f1.FollowingId = p.UserId " +
