@@ -29,6 +29,13 @@ namespace Application.Services.Chats
         {
             var messages = await _chatRepository.GetAllMessages(userId, id);
 
+            if (messages == null)
+            {
+                _logger.LogError($"User with id {userId} tried to access a chat with user with id {id}, but no messages were found.");
+
+                throw ChatException.NoMessagesFound();
+            }
+
             _logger.LogInformation($"User with id {userId} saw all messages of chat with user with id {id}.");
 
             return messages;

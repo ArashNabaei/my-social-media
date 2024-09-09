@@ -22,6 +22,13 @@ namespace Application.Services.Follows
         {
             var friends = await _followRepository.GetAllFriends(userId);
 
+            if (friends == null || !friends.Any())
+            {
+                _logger.LogError($"User with id {userId} tried to access their friends, but no friends were found.");
+
+                throw FollowException.NoFriendsFound();
+            }
+
             _logger.LogInformation($"User with id {userId} saw all his friends.");
 
             var result = friends.Select(friend => new UserDto
@@ -40,6 +47,13 @@ namespace Application.Services.Follows
         {
             var followers = await _followRepository.GetAllFollowers(userId);
 
+            if (followers == null || !followers.Any())
+            {
+                _logger.LogError($"User with id {userId} tried to access their followers, but no followers were found.");
+                
+                throw FollowException.NoFollowersFound();
+            }
+
             _logger.LogInformation($"User with id {userId} saw all his followers.");
 
             var result = followers.Select(follower => new UserDto
@@ -57,6 +71,13 @@ namespace Application.Services.Follows
         public async Task<IEnumerable<UserDto>> GetAllFollowings(int userId)
         {
             var followings = await _followRepository.GetAllFollowings(userId);
+
+            if (followings == null || !followings.Any())
+            {
+                _logger.LogError($"User with id {userId} tried to access their followings, but no followings were found.");
+                
+                throw FollowException.NoFollowingsFound();
+            }
 
             _logger.LogInformation($"User with id {userId} saw all his followings.");
 
