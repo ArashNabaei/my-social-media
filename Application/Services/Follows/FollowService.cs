@@ -72,6 +72,13 @@ namespace Application.Services.Follows
         {
             var followings = await _followRepository.GetAllFollowings(userId);
 
+            if (followings == null || !followings.Any())
+            {
+                _logger.LogError($"User with id {userId} tried to access their followings, but no followings were found.");
+                
+                throw FollowException.NoFollowingsFound();
+            }
+
             _logger.LogInformation($"User with id {userId} saw all his followings.");
 
             var result = followings.Select(following => new UserDto

@@ -26,6 +26,10 @@
             return new FollowException(5004, "No followers found.");
         }
 
+        public static FollowException NoFollowingsFound()
+        {
+            return new FollowException(5005, "No followings found.");
+        }
 
     }
 }
