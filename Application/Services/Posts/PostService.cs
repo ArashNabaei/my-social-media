@@ -23,6 +23,13 @@ namespace Application.Services.Posts
         {
             var posts = await _postRepository.GetAllPosts(userId);
 
+            if (posts == null || !posts.Any())
+            {
+                _logger.LogError($"User with id {userId} tried to access their posts, but no posts were found.");
+                
+                throw PostException.NoPostsFound();
+            }
+
             _logger.LogInformation($"User with id {userId} saw all his posts.");
 
             var result = posts.Select(post => new PostDto
@@ -144,6 +151,13 @@ namespace Application.Services.Posts
         {
             var likes = await _postRepository.GetLikesOfPost(userId, postId);
 
+            if (likes == null || !likes.Any())
+            {
+                _logger.LogError($"User with id {userId} tried to access likes of post with id {postId}, but no likes were found.");
+                
+                throw PostException.NoLikesFound();
+            }
+
             _logger.LogInformation($"User with id {userId} saw likes of post with id {postId}.");
 
             return likes;
@@ -152,6 +166,13 @@ namespace Application.Services.Posts
         public async Task<IEnumerable<Post>> GetFriendsPosts(int userId, int friendId)
         {
             var posts = await _postRepository.GetFriendsPosts(userId, friendId);
+
+            if (posts == null || !posts.Any())
+            {
+                _logger.LogError($"User with id {userId} tried to access posts of friend with id {friendId}, but no posts were found.");
+                
+                throw PostException.NoFriendsPostsFound();
+            }
 
             _logger.LogInformation($"User with id {userId} saw his friend's posts with id {friendId}.");
 
@@ -177,6 +198,13 @@ namespace Application.Services.Posts
         public async Task<IEnumerable<Comment>> GetCommentsOfPost(int userId, int postId)
         {
             var comments = await _postRepository.GetCommentsOfPost(userId, postId);
+
+            if (comments == null || !comments.Any())
+            {
+                _logger.LogError($"User with id {userId} tried to access comments of post with id {postId}, but no comments were found.");
+                
+                throw PostException.NoCommentsFound();
+            }
 
             _logger.LogInformation($"User with id {userId} saw all comments of post with id {postId}.");
 
