@@ -30,7 +30,7 @@ namespace Application.Services.Posts
                 Id = post.Id,
                 Caption = post.Caption,
                 ImageUrl = post.ImageUrl,
-                CreationTime = post.CreationTime,
+                CreatedAt = post.CreatedAt,
             });
 
             return result;
@@ -54,7 +54,7 @@ namespace Application.Services.Posts
                 Id = post.Id,
                 Caption = post.Caption,
                 ImageUrl = post.ImageUrl,
-                CreationTime = post.CreationTime,
+                CreatedAt = post.CreatedAt,
             };
 
             return result;
@@ -64,13 +64,13 @@ namespace Application.Services.Posts
         {
             var caption = post.Caption;
             var imageUrl = post.ImageUrl;
-            var creationTime = DateTime.UtcNow;
+            var createdAt = DateTime.UtcNow;
 
             var result = new Post
             {
                 ImageUrl = imageUrl,
                 Caption = caption,
-                CreationTime = creationTime,
+                CreatedAt = createdAt,
                 UserId = userId,
             };
 
@@ -109,13 +109,13 @@ namespace Application.Services.Posts
 
             var caption = post.Caption;
             var imageUrl = post.ImageUrl;
-            var creationTime = post.CreationTime;
+            var createdAt = post.CreatedAt;
 
             var result = new Post
             {
                 ImageUrl = imageUrl,
                 Caption = caption,
-                CreationTime = creationTime,
+                CreatedAt = createdAt,
                 UserId = userId,
             };
 
