@@ -22,6 +22,13 @@ namespace Application.Services.Follows
         {
             var friends = await _followRepository.GetAllFriends(userId);
 
+            if (friends == null || !friends.Any())
+            {
+                _logger.LogError($"User with id {userId} tried to access their friends, but no friends were found.");
+
+                throw FollowException.NoFriendsFound();
+            }
+
             _logger.LogInformation($"User with id {userId} saw all his friends.");
 
             var result = friends.Select(friend => new UserDto
