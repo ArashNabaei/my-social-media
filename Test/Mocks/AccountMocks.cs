@@ -15,12 +15,12 @@ namespace Test.Mocks
             };
         }
 
-        public static User InValidUser()
+        public static User InvalidUser()
         {
             return new User
             {
-                Username = "InValidUsername",
-                Password = "InValidPassword"
+                Username = "InvalidUsername",
+                Password = "InvalidPassword"
             };
         }
 

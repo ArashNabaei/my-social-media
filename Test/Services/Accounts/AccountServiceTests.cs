@@ -6,6 +6,7 @@ using Xunit;
 using Domain.Entities;
 using Shared.Exceptions.Accounts;
 using Application.Dtos;
+using Test.Mocks;
 
 namespace Test.Services.Accounts
 {
@@ -33,13 +34,12 @@ namespace Test.Services.Accounts
         [Fact]
         public async Task ValidateUser_WithInvalidCredentials_ShouldThrowsUserNotFoundException()
         {
-            var username = "invaliduser";
-            var password = "invalidpassword";
+            var user = AccountMocks.InvalidUser();
 
-            _accountRepository.Setup(r => r.GetUserByUsernameAndPassword(username, password))
+            _accountRepository.Setup(r => r.GetUserByUsernameAndPassword(user.Username, user.Password))
                               .ReturnsAsync((User?)null);
 
-            var exception = await Assert.ThrowsAsync<AccountException>(() => _accountService.ValidateUser(username, password));
+            var exception = await Assert.ThrowsAsync<AccountException>(() => _accountService.ValidateUser(user.Username, user.Password));
 
             Assert.Equal(1002, exception.Code);
         }
@@ -47,14 +47,12 @@ namespace Test.Services.Accounts
         [Fact]
         public async Task ValidateUser_WithValidCredentials_ShouldReturnsUserId()
         {
-            var username = "validuser";
-            var password = "validpassword";
-            var user = new User { Id = 1, Username = username, Password = password };
+            var user = AccountMocks.ValidUser();
 
-            _accountRepository.Setup(r => r.GetUserByUsernameAndPassword(username, password))
+            _accountRepository.Setup(r => r.GetUserByUsernameAndPassword(user.Username, user.Password))
                               .ReturnsAsync(user);
 
-            var result = await _accountService.ValidateUser(username, password);
+            var result = await _accountService.ValidateUser(user.Username, user.Password);
 
             Assert.Equal(user.Id, result);
         }
@@ -62,12 +60,12 @@ namespace Test.Services.Accounts
         [Fact]
         public async Task CreateUser_WithExistingUser_ShouldThrowsUserAlreadyExistsException()
         {
-            var userDto = new AccountDto { Username = "existinguser", Password = "password123" };
-            
-            var existingUser = new User { Id = 1, Username = "existinguser", Password = "password123" };
+            var userDto = new AccountDto { Username = "ExistingUsername", Password = "ExistingPassword" };
+
+            var user = AccountMocks.ExistingUser();
 
             _accountRepository.Setup(r => r.GetUserByUsernameAndPassword(userDto.Username, userDto.Password))
-                              .ReturnsAsync(existingUser);
+                              .ReturnsAsync(user);
 
             var exception = await Assert.ThrowsAsync<AccountException>(() => _accountService.CreateUser(userDto));
 
