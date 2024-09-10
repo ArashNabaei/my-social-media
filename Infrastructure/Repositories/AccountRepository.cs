@@ -24,7 +24,7 @@ namespace Infrastructure.Repositories
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
         }
 
-        public async Task<User> GetUserByUsernameAndPassword(string username, string password)
+        public async Task<User?> GetUserByUsernameAndPassword(string username, string password)
         {
             var parameters = new DynamicParameters();
             parameters.Add("username", username);
