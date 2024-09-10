@@ -5,6 +5,7 @@ using Moq;
 using Xunit;
 using Domain.Entities;
 using Shared.Exceptions.Accounts;
+using Application.Dtos;
 
 namespace Test.Services.Accounts
 {
@@ -50,12 +51,29 @@ namespace Test.Services.Accounts
             var password = "validpassword";
             var user = new User { Id = 1, Username = username, Password = password };
 
-            _accountRepository.Setup(repo => repo.GetUserByUsernameAndPassword(username, password))
+            _accountRepository.Setup(r => r.GetUserByUsernameAndPassword(username, password))
                               .ReturnsAsync(user);
 
             var result = await _accountService.ValidateUser(username, password);
 
             Assert.Equal(user.Id, result);
+        }
+
+        [Fact]
+        public async Task CreateUser_WithExistingUser_ShouldThrowsUserAlreadyExistsException()
+        {
+            var userDto = new AccountDto { Username = "existinguser", Password = "password123" };
+            
+            var existingUser = new User { Id = 1, Username = "existinguser", Password = "password123" };
+
+            _accountRepository.Setup(r => r.GetUserByUsernameAndPassword(userDto.Username, userDto.Password))
+                              .ReturnsAsync(existingUser);
+
+            var exception = await Assert.ThrowsAsync<AccountException>(() => _accountService.CreateUser(userDto));
+
+            Assert.Equal(1001, exception.Code);
+
+            _accountRepository.Verify(r => r.CreateUser(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
         }
 
     }
