@@ -69,5 +69,20 @@ namespace Test.Services.Chats
             _chatRepository.Verify(r => r.SendMessage(message.SenderId, message.ReceiverId, message.Content), Times.Once);
         }
 
+        [Fact]
+        public async Task DeleteMessage_WhenMessageExists_ShouldDeletesMessageSuccessfully()
+        {
+            var message = ChatMocks.ValidMessage();
+            int messageId = message.Id;
+            int userId = message.SenderId;
+
+            _chatRepository.Setup(r => r.GetMessagebyId(userId, messageId))
+                           .ReturnsAsync(message);
+
+            await _chatService.DeleteMessage(userId, messageId);
+
+            _chatRepository.Verify(r => r.DeleteMessage(userId, messageId), Times.Once);
+        }
+
     }
 }
