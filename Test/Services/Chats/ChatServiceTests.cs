@@ -59,5 +59,15 @@ namespace Test.Services.Chats
             Assert.Equal(4002, exception.Code);
         }
 
+        [Fact]
+        public async Task SendMessage_ShouldSendMessageSent()
+        {
+            var message = ChatMocks.ValidMessage();
+
+            await _chatService.SendMessage(message.SenderId, message.ReceiverId, message.Content);
+
+            _chatRepository.Verify(r => r.SendMessage(message.SenderId, message.ReceiverId, message.Content), Times.Once);
+        }
+
     }
 }
