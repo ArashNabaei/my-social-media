@@ -5,7 +5,7 @@ using Moq;
 
 namespace Test.Services.Chats
 {
-    public class ChatServiceTest
+    public class ChatServiceTests
     {
 
         private readonly Mock<IChatRepository> _chatRepository;
@@ -14,7 +14,7 @@ namespace Test.Services.Chats
 
         private readonly IChatService _chatService;
 
-        public ChatServiceTest()
+        public ChatServiceTests()
         {
             _chatRepository = new Mock<IChatRepository> ();
             _logger = new Mock<ILogger<ChatService>> ();
