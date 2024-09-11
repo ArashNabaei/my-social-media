@@ -18,7 +18,7 @@ namespace Application.Services.Follows
             _logger = logger;
         }
 
-        public async Task<IEnumerable<UserDto>> GetAllFriends(int userId) 
+        public async Task<IEnumerable<UserDto>?> GetAllFriends(int userId) 
         {
             var friends = await _followRepository.GetAllFriends(userId);
 
@@ -43,7 +43,7 @@ namespace Application.Services.Follows
             return result;
         }
 
-        public async Task<IEnumerable<UserDto>> GetAllFollowers(int userId)
+        public async Task<IEnumerable<UserDto>?> GetAllFollowers(int userId)
         {
             var followers = await _followRepository.GetAllFollowers(userId);
 
@@ -68,7 +68,7 @@ namespace Application.Services.Follows
             return result;
         }
 
-        public async Task<IEnumerable<UserDto>> GetAllFollowings(int userId)
+        public async Task<IEnumerable<UserDto>?> GetAllFollowings(int userId)
         {
             var followings = await _followRepository.GetAllFollowings(userId);
 
@@ -93,7 +93,7 @@ namespace Application.Services.Follows
             return result;
         }
 
-        public async Task<UserDto> GetFollowerById(int userId, int followerId)
+        public async Task<UserDto?> GetFollowerById(int userId, int followerId)
         {
             var follower = await _followRepository.GetFollowerById(userId, followerId);
 
@@ -118,7 +118,7 @@ namespace Application.Services.Follows
             return result;
         }
 
-        public async Task<UserDto> GetFollowingById(int userId, int followingId)
+        public async Task<UserDto?> GetFollowingById(int userId, int followingId)
         {
             var following = await _followRepository.GetFollowingById(userId, followingId);
 
