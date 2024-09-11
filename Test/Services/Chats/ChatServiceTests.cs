@@ -98,5 +98,20 @@ namespace Test.Services.Chats
             Assert.Equal(4001, exception.Code);
         }
 
+        [Fact]
+        public async Task UpdateMessage_WhenMessageExists_ShouldUpdatesMessageSuccessfully()
+        {
+            var message = ChatMocks.ValidMessage();
+            int messageId = message.Id;
+            int userId = message.SenderId;
+
+            _chatRepository.Setup(r => r.GetMessagebyId(userId, messageId))
+                           .ReturnsAsync(message);
+
+            await _chatService.UpdateMessage(userId, messageId, "updated message");
+
+            _chatRepository.Verify(r => r.UpdateMessage(userId, messageId, "updated message"), Times.Once);
+        }
+
     }
 }
