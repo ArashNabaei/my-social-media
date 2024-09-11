@@ -6,7 +6,7 @@ namespace Domain.Repositories
     {
         Task SendMessage(int senderId, int receiverId,  string message);
 
-        Task<IEnumerable<Message>> GetAllMessages(int userId, int id);
+        Task<IEnumerable<Message>?> GetAllMessages(int userId, int id);
 
         Task<Message> GetMessagebyId(int userId, int messageId);
 

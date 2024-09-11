@@ -45,5 +45,19 @@ namespace Test.Services.Chats
             Assert.Equal(messages, result);
         }
 
+        [Fact]
+        public async Task GetAllMessages_WhenNoMessagesExist_ShouldThrowsNoMessagesFoundException()
+        {
+            int userId = 1;
+            int chatId = 2;
+
+            _chatRepository.Setup(r => r.GetAllMessages(userId, chatId))
+                           .ReturnsAsync((IEnumerable<Message>?)null);
+
+            var exception = await Assert.ThrowsAsync<ChatException>(() => _chatService.GetAllMessages(userId, chatId));
+
+            Assert.Equal(4002, exception.Code);
+        }
+
     }
 }

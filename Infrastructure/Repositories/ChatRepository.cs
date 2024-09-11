@@ -29,7 +29,7 @@ namespace Infrastructure.Repositories
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
         }
 
-        public async Task<IEnumerable<Message>> GetAllMessages(int userId, int id)
+        public async Task<IEnumerable<Message>?> GetAllMessages(int userId, int id)
         {
             var parameters = new DynamicParameters();
             parameters.Add("userId", userId);
