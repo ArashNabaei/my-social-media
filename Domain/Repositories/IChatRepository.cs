@@ -8,7 +8,7 @@ namespace Domain.Repositories
 
         Task<IEnumerable<Message>?> GetAllMessages(int userId, int id);
 
-        Task<Message> GetMessagebyId(int userId, int messageId);
+        Task<Message?> GetMessagebyId(int userId, int messageId);
 
         Task DeleteMessage(int userId, int messageId);
 

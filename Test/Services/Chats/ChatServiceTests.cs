@@ -84,5 +84,19 @@ namespace Test.Services.Chats
             _chatRepository.Verify(r => r.DeleteMessage(userId, messageId), Times.Once);
         }
 
+        [Fact]
+        public async Task DeleteMessage_WhenMessageDoesNotExist_ShouldThrowsMessageNotFoundException()
+        {
+            int userId = 1;
+            int messageId = 1;
+
+            _chatRepository.Setup(r => r.GetMessagebyId(userId, messageId))
+                           .ReturnsAsync((Message?)null);
+
+            var exception = await Assert.ThrowsAsync<ChatException>(() => _chatService.DeleteMessage(userId, messageId));
+
+            Assert.Equal(4001, exception.Code);
+        }
+
     }
 }
