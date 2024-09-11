@@ -113,5 +113,19 @@ namespace Test.Services.Chats
             _chatRepository.Verify(r => r.UpdateMessage(userId, messageId, "updated message"), Times.Once);
         }
 
+        [Fact]
+        public async Task UpdateMessage_WhenMessageDoesNotExist_ShouldThrowsMessageNotFoundException()
+        {
+            int userId = 1;
+            int messageId = 1;
+
+            _chatRepository.Setup(r => r.GetMessagebyId(userId, messageId))
+                           .ReturnsAsync((Message?)null);
+
+            var exception = await Assert.ThrowsAsync<ChatException>(() => _chatService.UpdateMessage(userId, messageId, "updated message"));
+
+            Assert.Equal(4001, exception.Code);
+        }
+
     }
 }
