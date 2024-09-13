@@ -52,6 +52,28 @@ namespace Test.Services.Follows
             Assert.Equal(expectedFriends.First().LastName, result.First().LastName);
         }
 
+        [Fact]
+        public async Task GetAllFollowers_WhenFollowersExist_ShouldReturnsFollowers()
+        {
+            int userId = 2;
+
+            var followers = new List<User>();
+            followers.Add(FollowMocks.ValidUser());
+
+            _followRepository.Setup(r => r.GetAllFollowers(userId))
+                .ReturnsAsync(followers);
+
+            var expectedFollowers = ConvertUserToUserDto(followers);
+
+            var result = await _followService.GetAllFollowers(userId);
+
+            Assert.NotNull(result);
+            Assert.Equal(expectedFollowers.Count(), result.Count());
+            Assert.Equal(expectedFollowers.First().Id, result.First().Id);
+            Assert.Equal(expectedFollowers.First().FirstName, result.First().FirstName);
+            Assert.Equal(expectedFollowers.First().LastName, result.First().LastName);
+        }
+
         private static IEnumerable<UserDto> ConvertUserToUserDto(List<User> friends)
         {
             return friends.Select(f => new UserDto
