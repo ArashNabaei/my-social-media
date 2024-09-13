@@ -190,7 +190,8 @@ namespace Test.Services.Follows
         [Fact]
         public async Task GetFollowingById_WhenFollowingDoesNotExist_ShouldReturnsFollowingNotFoundException()
         {
-            int userId = 1, followingId = 2;
+            int userId = 1;
+            int followingId = 2;
 
             _followRepository.Setup(r => r.GetFollowingById(userId, followingId))
                 .ReturnsAsync((User?)null);
@@ -228,6 +229,18 @@ namespace Test.Services.Follows
             await _followService.RemoveFollowing(userId, following.Id);
 
             _followRepository.Verify(r => r.RemoveFollowing(userId, following.Id), Times.Once);
+        }
+
+        [Fact]
+        public async Task Follow_ShouldFollowUser()
+        {
+            int userId = 1;
+
+            var user = FollowMocks.ValidUser();
+
+            await _followService.Follow(userId, user.Id);
+
+            _followRepository.Verify(r => r.Follow(userId, user.Id), Times.Once);
         }
 
         private static IEnumerable<UserDto> ConvertUserToUserDto(List<User> friends)
