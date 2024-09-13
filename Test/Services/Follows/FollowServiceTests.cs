@@ -4,6 +4,7 @@ using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Shared.Exceptions.Follows;
 using Test.Mocks;
 using Xunit;
 
@@ -94,6 +95,45 @@ namespace Test.Services.Follows
             Assert.Equal(expectedFollowings.First().Id, result.First().Id);
             Assert.Equal(expectedFollowings.First().FirstName, result.First().FirstName);
             Assert.Equal(expectedFollowings.First().LastName, result.First().LastName);
+        }
+
+        [Fact]
+        public async Task GetAllFriends_WhenNoFriendsExist_ShouldReturnsNoFriendsFoundException()
+        {
+            int userId = 1;
+
+            _followRepository.Setup(r => r.GetAllFriends(userId))
+                .ReturnsAsync((IEnumerable<User>?)null);
+
+            var exception = await Assert.ThrowsAsync<FollowException>(() => _followService.GetAllFriends(userId));
+
+            Assert.Equal(5003, exception.Code);
+        }
+
+        [Fact]
+        public async Task GetAllFollowers_WhenNoFollowersExist_ShouldReturnsNoFollowersFoundException()
+        {
+            int userId = 1;
+
+            _followRepository.Setup(r => r.GetAllFollowers(userId))
+                .ReturnsAsync((IEnumerable<User>?)null);
+
+            var exception = await Assert.ThrowsAsync<FollowException>(() => _followService.GetAllFollowers(userId));
+
+            Assert.Equal(5004, exception.Code);
+        }
+
+        [Fact]
+        public async Task GetAllFollowings_WhenNoFollowingsExist_ShouldReturnsNoFollowingsFoundException()
+        {
+            int userId = 1;
+
+            _followRepository.Setup(r => r.GetAllFollowings(userId))
+                .ReturnsAsync((IEnumerable<User>?)null);
+
+            var exception = await Assert.ThrowsAsync<FollowException>(() => _followService.GetAllFollowings(userId));
+
+            Assert.Equal(5005, exception.Code);
         }
 
         private static IEnumerable<UserDto> ConvertUserToUserDto(List<User> friends)
