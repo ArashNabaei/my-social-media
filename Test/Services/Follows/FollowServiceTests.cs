@@ -174,6 +174,32 @@ namespace Test.Services.Follows
             Assert.Equal(following.Bio, result.Bio);
         }
 
+        [Fact]
+        public async Task GetFollowerById_WhenFollowerDoesNotExist_ShouldReturnsFollowerNotFoundException()
+        {
+            int userId = 1, followerId = 2;
+
+            _followRepository.Setup(r => r.GetFollowerById(userId, followerId))
+                .ReturnsAsync((User?)null);
+
+            var exception = await Assert.ThrowsAsync<FollowException>(() => _followService.GetFollowerById(userId, followerId));
+
+            Assert.Equal(5001, exception.Code);
+        }
+
+        [Fact]
+        public async Task GetFollowingById_WhenFollowingDoesNotExist_ShouldReturnsFollowingNotFoundException()
+        {
+            int userId = 1, followingId = 2;
+
+            _followRepository.Setup(r => r.GetFollowingById(userId, followingId))
+                .ReturnsAsync((User?)null);
+
+            var exception = await Assert.ThrowsAsync<FollowException>(() => _followService.GetFollowingById(userId, followingId));
+
+            Assert.Equal(5002, exception.Code);
+        }
+
         private static IEnumerable<UserDto> ConvertUserToUserDto(List<User> friends)
         {
             return friends.Select(f => new UserDto
