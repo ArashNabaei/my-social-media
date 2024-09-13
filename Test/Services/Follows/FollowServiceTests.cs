@@ -136,6 +136,44 @@ namespace Test.Services.Follows
             Assert.Equal(5005, exception.Code);
         }
 
+        [Fact]
+        public async Task GetFollowerById_WhenFollowerExists_ShouldReturnsFollower()
+        {
+            int userId = 1;
+
+            var follower = FollowMocks.ValidUser();
+
+            _followRepository.Setup(r => r.GetFollowerById(userId, follower.Id))
+                .ReturnsAsync(follower);
+
+            var result = await _followService.GetFollowerById(userId, follower.Id);
+
+            Assert.Equal(follower.Id, result.Id);
+            Assert.Equal(follower.FirstName, result.FirstName);
+            Assert.Equal(follower.LastName, result.LastName);
+            Assert.Equal(follower.ImageUrl, result.ImageUrl);
+            Assert.Equal(follower.Bio, result.Bio);
+        }
+
+        [Fact]
+        public async Task GetFollowingById_WhenFollowingExists_ShouldReturnsFollowing()
+        {
+            int userId = 1;
+
+            var following = FollowMocks.ValidUser();
+
+            _followRepository.Setup(r => r.GetFollowingById(userId, following.Id))
+                .ReturnsAsync(following);
+
+            var result = await _followService.GetFollowingById(userId,following.Id);
+
+            Assert.Equal(following.Id, result.Id);
+            Assert.Equal(following.FirstName, result.FirstName);
+            Assert.Equal(following.LastName, result.LastName);
+            Assert.Equal(following.ImageUrl, result.ImageUrl);
+            Assert.Equal(following.Bio, result.Bio);
+        }
+
         private static IEnumerable<UserDto> ConvertUserToUserDto(List<User> friends)
         {
             return friends.Select(f => new UserDto
