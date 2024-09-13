@@ -200,6 +200,36 @@ namespace Test.Services.Follows
             Assert.Equal(5002, exception.Code);
         }
 
+        [Fact]
+        public async Task RemoveFollower_WhenFollowerExists_ShouldRemoveFollower()
+        {
+            int userId = 1;
+
+            var follower = FollowMocks.ValidUser();
+
+            _followRepository.Setup(r => r.GetFollowerById(userId, follower.Id))
+                .ReturnsAsync(follower);
+
+            await _followService.RemoveFollower(userId, follower.Id);
+
+            _followRepository.Verify(r => r.RemoveFollower(userId, follower.Id), Times.Once);
+        }
+
+        [Fact]
+        public async Task RemoveFollowing_WhenFollowingExists_ShouldRemoveFollowing()
+        {
+            int userId = 1;
+
+            var following = FollowMocks.ValidUser();
+
+            _followRepository.Setup(r => r.GetFollowingById(userId, following.Id))
+                .ReturnsAsync(following);
+
+            await _followService.RemoveFollowing(userId, following.Id);
+
+            _followRepository.Verify(r => r.RemoveFollowing(userId, following.Id), Times.Once);
+        }
+
         private static IEnumerable<UserDto> ConvertUserToUserDto(List<User> friends)
         {
             return friends.Select(f => new UserDto
