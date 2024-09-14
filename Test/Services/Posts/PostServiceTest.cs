@@ -226,6 +226,20 @@ namespace Test.Services.Posts
             Assert.Equal(posts.First().CreatedAt, result.First().CreatedAt);
         }
 
+        [Fact]
+        public async Task GetFriendsPosts_WhenNoPostExists_ShouldThrowsNoPostsFoundException()
+        {
+            int userId = 1;
+            int friendId = 2;
+
+            _postRepository.Setup(r => r.GetFriendsPosts(userId, friendId))
+                .ReturnsAsync((IEnumerable<Post>?)null);
+
+            var exception = await Assert.ThrowsAsync<PostException>(() => _postService.GetFriendsPosts(userId, friendId));
+
+            Assert.Equal(3004, exception.Code);
+        }
+
         private static PostDto ConvertPostToPostDto(Post post)
         {
             return new PostDto
