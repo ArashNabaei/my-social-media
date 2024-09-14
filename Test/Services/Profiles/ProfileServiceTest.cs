@@ -1,7 +1,9 @@
 ﻿using Application.Services.Profiles;
+using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Shared.Exceptions.Profiles;
 using Test.Mocks;
 using Xunit;
 
@@ -51,6 +53,19 @@ namespace Test.Services.Profiles
             Assert.Equal(profile.FirstName, result.FirstName);
             Assert.Equal(profile.LastName, result.LastName);
             Assert.Equal(profile.Email, result.Email);
+        }
+
+        [Fact]
+        public async Task GetProfile_WhenProfileDoesNotExist_ShouldThrowsProfileNotFoundException()
+        {
+            int userId = 1;
+
+            _profileRepository.Setup(r => r.GetProfile(userId))
+                .ReturnsAsync((User?)null);
+
+            var exception = await Assert.ThrowsAsync<ProfileException>(() => _profileService.GetProfile(userId));
+
+            Assert.Equal(2001, exception.Code);
         }
 
     }
