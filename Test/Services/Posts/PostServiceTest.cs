@@ -204,6 +204,28 @@ namespace Test.Services.Posts
             Assert.Equal(3005, exception.Code);
         }
 
+        [Fact]
+        public async Task GetFriendsPosts_WhenPostsExist_ShouldReturnsPosts()
+        {
+            int userId = 1;
+            int friendId = 2;
+
+            var posts = new List<Post>();
+            posts.Add(PostMocks.ValidPost());
+
+            _postRepository.Setup(r => r.GetFriendsPosts(userId, friendId))
+                .ReturnsAsync(posts);
+
+            var result = await _postService.GetFriendsPosts(userId, friendId);
+
+            Assert.NotNull(result);
+            Assert.Equal(posts.Count(), result.Count());
+            Assert.Equal(posts.First().Id, result.First().Id);
+            Assert.Equal(posts.First().ImageUrl, result.First().ImageUrl);
+            Assert.Equal(posts.First().Caption, result.First().Caption);
+            Assert.Equal(posts.First().CreatedAt, result.First().CreatedAt);
+        }
+
         private static PostDto ConvertPostToPostDto(Post post)
         {
             return new PostDto
