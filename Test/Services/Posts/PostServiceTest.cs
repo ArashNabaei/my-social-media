@@ -102,6 +102,25 @@ namespace Test.Services.Posts
             Assert.Equal(3001, exception.Code);
         }
 
+        [Fact]
+        public async Task CreatePost_ShouldBeCalledOnce()
+        {
+            int userId = 1;
+
+            var post = PostMocks.ValidPost();
+
+            var postDto = ConvertPostToPostDto(post);
+
+            await _postService.CreatePost(userId, postDto);
+
+            _postRepository.Verify(r => r.CreatePost(userId,
+                It.Is<Post>(p =>
+                    p.Caption == postDto.Caption &&
+                    p.ImageUrl == postDto.ImageUrl &&
+                    p.UserId == userId &&
+                    p.CreatedAt != default)), Times.Once);
+        }
+
         private static PostDto ConvertPostToPostDto(Post post)
         {
             return new PostDto
