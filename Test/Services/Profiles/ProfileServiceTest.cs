@@ -1,6 +1,7 @@
 ﻿using Application.Services.Profiles;
 using Domain.Entities;
 using Domain.Repositories;
+using Infrastructure.Repositories;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Shared.Exceptions.Profiles;
@@ -66,6 +67,35 @@ namespace Test.Services.Profiles
             var exception = await Assert.ThrowsAsync<ProfileException>(() => _profileService.GetProfile(userId));
 
             Assert.Equal(2001, exception.Code);
+        }
+
+        [Fact]
+        public async Task UpdateProfile_whenProfileExists_ShouldUpdateProfile()
+        {
+            int userId = 1;
+
+            var profile = ProfileMocks.ValidUser();
+
+            _profileRepository.Setup(r => r.GetProfile(userId))
+                .ReturnsAsync(profile);
+
+            var updatedProfile = ProfileMocks.UpdatedUser();
+
+            await _profileService.UpdateProfile(userId, updatedProfile);
+
+            _profileRepository.Verify(r => r.UpdateProfile(userId,
+                It.Is<User>(p =>
+                    p.Id == updatedProfile.Id &&
+                    p.ImageUrl == updatedProfile.ImageUrl &&
+                    p.FirstName == updatedProfile.FirstName &&
+                    p.LastName == updatedProfile.LastName &&
+                    p.Username == updatedProfile.Username &&
+                    p.Password == updatedProfile.Password &&
+                    p.Bio == updatedProfile.Bio &&
+                    p.PhoneNumber == updatedProfile.PhoneNumber &&
+                    p.Email == updatedProfile.Email &&
+                    p.DateOfBirth == updatedProfile.DateOfBirth
+                        )), Times.Once);
         }
 
     }

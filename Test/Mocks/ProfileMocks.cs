@@ -22,5 +22,22 @@ namespace Test.Mocks
             };
         }
 
+        public static User UpdatedUser()
+        {
+            return new User
+            {
+                Id = 1,
+                FirstName = "UpdatedFirstname",
+                LastName = "UpdatedLastname",
+                Username = "UpdatedUsername",
+                Password = "UpdatedPassword",
+                Bio = "UpdatedBio",
+                ImageUrl = "UpdatedImageUrl",
+                Email = "UpdatedEmail",
+                PhoneNumber = "2234567890",
+                DateOfBirth = DateTime.UtcNow,
+            };
+        }
+
     }
 }
