@@ -121,6 +121,21 @@ namespace Test.Services.Posts
                     p.CreatedAt != default)), Times.Once);
         }
 
+        [Fact]
+        public async Task DeletePost_WhenPostExists_ShouldDeletePost()
+        {
+            int userId = 1;
+
+            var post = PostMocks.ValidPost();
+
+            _postRepository.Setup(r => r.GetPostById(userId, post.Id))
+                .ReturnsAsync(post);
+
+            await _postService.DeletePost(userId, post.Id);
+
+            _postRepository.Verify(r => r.DeletePost(userId, post.Id), Times.Once);
+        }
+
         private static PostDto ConvertPostToPostDto(Post post)
         {
             return new PostDto
