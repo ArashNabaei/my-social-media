@@ -14,7 +14,7 @@ namespace Infrastructure.Repositories
             _dapperContext = dapperContext;
         }
 
-        public async Task<User> GetProfile(int id)
+        public async Task<User?> GetProfile(int id)
         {
             var parameters = new DynamicParameters();
             parameters.Add("id", id);
