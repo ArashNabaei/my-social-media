@@ -15,7 +15,7 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<IEnumerable<Post>> GetAllPosts(int userId)
+        public async Task<IEnumerable<Post>?> GetAllPosts(int userId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("userId", userId);
@@ -35,7 +35,7 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<Post> GetPostById(int userId, int postId)
+        public async Task<Post?> GetPostById(int userId, int postId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("userId", userId);
@@ -113,7 +113,7 @@ namespace Infrastructure.Repositories
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
         }
 
-        public async Task<IEnumerable<Like>> GetLikesOfPost(int userId, int postId)
+        public async Task<IEnumerable<Like>?> GetLikesOfPost(int userId, int postId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("userId", userId);
@@ -135,7 +135,7 @@ namespace Infrastructure.Repositories
             return likes;
         }
 
-        public async Task<Post> GetOthersPostById(int userId, int postId)
+        public async Task<Post?> GetOthersPostById(int userId, int postId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("userId", userId);
@@ -158,7 +158,7 @@ namespace Infrastructure.Repositories
             return post;
         }
 
-        public async Task<IEnumerable<Post>> GetFriendsPosts(int userId, int friendId)
+        public async Task<IEnumerable<Post>?> GetFriendsPosts(int userId, int friendId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("userId", userId);
@@ -197,7 +197,7 @@ namespace Infrastructure.Repositories
             await _dapperContext.Connection.ExecuteAsync(query, parameters);
         }
 
-        public async Task<IEnumerable<Comment>> GetCommentsOfPost(int userId, int postId)
+        public async Task<IEnumerable<Comment>?> GetCommentsOfPost(int userId, int postId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("userId", userId);

@@ -4,9 +4,9 @@ namespace Domain.Repositories
 {
     public interface IPostRepository
     {
-        Task<IEnumerable<Post>> GetAllPosts(int userId);
+        Task<IEnumerable<Post>?> GetAllPosts(int userId);
 
-        Task<Post> GetPostById(int userId, int postId);
+        Task<Post?> GetPostById(int userId, int postId);
 
         Task CreatePost(int userId, Post post);
 
@@ -16,14 +16,14 @@ namespace Domain.Repositories
 
         Task LikePost(int userId, int postId);
 
-        Task<IEnumerable<Like>> GetLikesOfPost(int userId, int postId);
+        Task<IEnumerable<Like>?> GetLikesOfPost(int userId, int postId);
 
-        Task<Post> GetOthersPostById(int userId, int postId);
+        Task<Post?> GetOthersPostById(int userId, int postId);
 
-        Task<IEnumerable<Post>> GetFriendsPosts(int userId, int friendId);
+        Task<IEnumerable<Post>?> GetFriendsPosts(int userId, int friendId);
 
         Task LeaveCommentOnPost(int userId, int postId, string comment);
 
-        Task<IEnumerable<Comment>> GetCommentsOfPost(int userId, int postId);
+        Task<IEnumerable<Comment>?> GetCommentsOfPost(int userId, int postId);
     }
 }

@@ -14,7 +14,7 @@ namespace Infrastructure.Repositories
             _dapperContext = dapperContext;
         }
 
-        public async Task<IEnumerable<User>> GetAllFriends(int userId)
+        public async Task<IEnumerable<User>?> GetAllFriends(int userId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("userId", userId);
@@ -38,7 +38,7 @@ namespace Infrastructure.Repositories
             return users;
         }
 
-        public async Task<IEnumerable<User>> GetAllFollowers(int userId)
+        public async Task<IEnumerable<User>?> GetAllFollowers(int userId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("userId", userId);
@@ -58,7 +58,7 @@ namespace Infrastructure.Repositories
             return users;
         }
 
-        public async Task<IEnumerable<User>> GetAllFollowings(int userId)
+        public async Task<IEnumerable<User>?> GetAllFollowings(int userId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("userId", userId);
@@ -78,7 +78,7 @@ namespace Infrastructure.Repositories
             return users;
         }
 
-        public async Task<User> GetFollowerById(int userId, int followerId)
+        public async Task<User?> GetFollowerById(int userId, int followerId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("userId", userId);
@@ -99,7 +99,7 @@ namespace Infrastructure.Repositories
             return users;
         }
 
-        public async Task<User> GetFollowingById(int userId, int followingId)
+        public async Task<User?> GetFollowingById(int userId, int followingId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("userId", userId);
