@@ -158,6 +158,21 @@ namespace Test.Services.Posts
                     p.UserId == userId)), Times.Once);
         }
 
+        [Fact]
+        public async Task LikePost_WhenPostExists_ShouldLikesPost()
+        {
+            int userId = 1;
+
+            var post = PostMocks.ValidPost();
+
+            _postRepository.Setup(r => r.GetOthersPostById(userId, post.Id))
+                .ReturnsAsync(post);
+
+            await _postService.LikePost(userId, post.Id);
+
+            _postRepository.Verify(r => r.LikePost(userId, post.Id), Times.Once);
+        }
+
         private static PostDto ConvertPostToPostDto(Post post)
         {
             return new PostDto
