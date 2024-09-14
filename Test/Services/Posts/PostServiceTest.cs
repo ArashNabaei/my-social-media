@@ -272,6 +272,20 @@ namespace Test.Services.Posts
             Assert.Equal(comments, result);
         }
 
+        [Fact]
+        public async Task GetCommentsOfPost_WhenNoCommentsExist_ShouldThrowsNoCommentsFound()
+        {
+            int userId = 1;
+            int postId = 1;
+
+            _postRepository.Setup(r => r.GetCommentsOfPost(userId, postId))
+                .ReturnsAsync((IEnumerable<Comment>?)null);
+
+            var exception = await Assert.ThrowsAsync<PostException>(() => _postService.GetCommentsOfPost(userId, postId));
+
+            Assert.Equal(3003, exception.Code);
+        }
+
         private static PostDto ConvertPostToPostDto(Post post)
         {
             return new PostDto
