@@ -190,6 +190,20 @@ namespace Test.Services.Posts
             Assert.Equal(likes, result);
         }
 
+        [Fact]
+        public async Task GetLikesOfPost_WhenPostDoesNotExist_ShouldThrowsPostNotFoundException()
+        {
+            int userId = 1;
+            int postId = 1;
+
+            _postRepository.Setup(r => r.GetLikesOfPost(userId, postId))
+                .ReturnsAsync((IEnumerable<Like>?)null);
+
+            var exception = await Assert.ThrowsAsync<PostException>(() => _postService.GetLikesOfPost(userId, postId));
+
+            Assert.Equal(3005, exception.Code);
+        }
+
         private static PostDto ConvertPostToPostDto(Post post)
         {
             return new PostDto
