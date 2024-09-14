@@ -88,6 +88,20 @@ namespace Test.Services.Posts
             Assert.Equal(expectedPost.CreatedAt, result.CreatedAt);
         }
 
+        [Fact]
+        public async Task GetPostById_WhenPostDoesNotExit_ShouldThrowsPostNotFoundException()
+        {
+            int userId = 1;
+            int postId = 2;
+
+            _postRepository.Setup(r => r.GetPostById(userId, postId))
+                .ReturnsAsync((Post?)null);
+
+            var exception = await Assert.ThrowsAsync<PostException>(() => _postService.GetPostById(userId, postId));
+
+            Assert.Equal(3001, exception.Code);
+        }
+
         private static PostDto ConvertPostToPostDto(Post post)
         {
             return new PostDto
