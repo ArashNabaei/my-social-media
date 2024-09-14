@@ -255,6 +255,23 @@ namespace Test.Services.Posts
             _postRepository.Verify(r => r.LeaveCommentOnPost(userId, post.Id, "comment"), Times.Once);
         }
 
+        [Fact]
+        public async Task GetCommentsOfPost_WhenCommentsExist_ShouldReturnsComments()
+        {
+            int userId = 1;
+            int postId = 1;
+
+            var comments = new List<Comment> ();
+            comments.Add(PostMocks.ValidComment());
+
+            _postRepository.Setup(r => r.GetCommentsOfPost(userId, postId))
+                .ReturnsAsync(comments);
+
+            var result = await _postService.GetCommentsOfPost(userId, postId);
+
+            Assert.Equal(comments, result);
+        }
+
         private static PostDto ConvertPostToPostDto(Post post)
         {
             return new PostDto

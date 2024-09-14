@@ -39,5 +39,16 @@ namespace Test.Mocks
             };
         }
 
+        public static Comment ValidComment()
+        {
+            return new Comment
+            {
+                Id = 1,
+                UserId= 1,
+                Username = "username",
+                CreatedAt = DateTime.UtcNow,
+            };
+        }
+
     }
 }
