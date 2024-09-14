@@ -17,5 +17,16 @@ namespace Test.Mocks
             };
         }
 
+        public static PostDto UpdatedPost()
+        {
+            return new PostDto
+            {
+                Id = 1,
+                ImageUrl = "UpdatedImageUrl",
+                Caption = "UpdatedCaption",
+                CreatedAt = DateTime.UtcNow,
+            };
+        }
+
     }
 }

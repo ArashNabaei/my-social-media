@@ -136,6 +136,28 @@ namespace Test.Services.Posts
             _postRepository.Verify(r => r.DeletePost(userId, post.Id), Times.Once);
         }
 
+        [Fact]
+        public async Task UpdatePost_WhenPostExists_ShouldUpdatePost()
+        {
+            int userId = 1;
+
+            var post = PostMocks.ValidPost();
+
+            _postRepository.Setup(r => r.GetPostById(userId, post.Id))
+                .ReturnsAsync(post);
+
+            var postDto = PostMocks.UpdatedPost(); ;
+
+            await _postService.UpdatePost(userId, post.Id, postDto);
+
+            _postRepository.Verify(r => r.UpdatePost(userId, post.Id, 
+                It.Is<Post>(p =>
+                    p.Caption == postDto.Caption &&
+                    p.ImageUrl == postDto.ImageUrl &&
+                    p.CreatedAt == postDto.CreatedAt &&
+                    p.UserId == userId)), Times.Once);
+        }
+
         private static PostDto ConvertPostToPostDto(Post post)
         {
             return new PostDto
