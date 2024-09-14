@@ -1,13 +1,14 @@
 ﻿using Application.Dtos;
+using Domain.Entities;
 
 namespace Test.Mocks
 {
     public static class PostMocks
     {
 
-        public static PostDto ValidPost()
+        public static Post ValidPost()
         {
-            return new PostDto
+            return new Post
             {
                 Id = 1,
                 ImageUrl = "imageUrl", 
