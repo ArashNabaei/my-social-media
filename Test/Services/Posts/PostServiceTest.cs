@@ -173,6 +173,23 @@ namespace Test.Services.Posts
             _postRepository.Verify(r => r.LikePost(userId, post.Id), Times.Once);
         }
 
+        [Fact]
+        public async Task GetLikesOfPost_WhenPostsExist_ShouldReturnsLikesOfPost()
+        {
+            int userId = 1;
+            int postId = 1;
+
+            var likes = new List<Like>();
+            likes.Add(PostMocks.ValidLike());
+
+            _postRepository.Setup(r => r.GetLikesOfPost(userId, postId))
+                .ReturnsAsync(likes);
+
+            var result = await _postService.GetLikesOfPost(userId, postId);
+
+            Assert.Equal(likes, result);
+        }
+
         private static PostDto ConvertPostToPostDto(Post post)
         {
             return new PostDto

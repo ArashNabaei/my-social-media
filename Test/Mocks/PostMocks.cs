@@ -28,5 +28,16 @@ namespace Test.Mocks
             };
         }
 
+        public static Like ValidLike()
+        {
+            return new Like
+            {
+                Id = 1,
+                UserId = 1,
+                UserName = "username",
+                CreatedAt = DateTime.UtcNow,
+            };
+        }
+
     }
 }
