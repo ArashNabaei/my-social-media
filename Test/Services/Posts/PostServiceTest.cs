@@ -240,6 +240,21 @@ namespace Test.Services.Posts
             Assert.Equal(3004, exception.Code);
         }
 
+        [Fact]
+        public async Task LeaveCommentOnPost_ShouldBeCalledOnce()
+        {
+            int userId = 1;
+
+            var post = PostMocks.ValidPost();
+
+            _postRepository.Setup(r => r.GetOthersPostById(userId, post.Id))
+                .ReturnsAsync(post);
+
+            await _postService.LeaveCommentOnPost(userId, post.Id, "comment");
+
+            _postRepository.Verify(r => r.LeaveCommentOnPost(userId, post.Id, "comment"), Times.Once);
+        }
+
         private static PostDto ConvertPostToPostDto(Post post)
         {
             return new PostDto
