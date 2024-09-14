@@ -44,7 +44,7 @@ namespace Test.Services.Posts
 
             var result = await _postService.GetAllPosts(userId);
 
-            var expectedPosts = ConvertPostToPostDto(posts);
+            var expectedPosts = ConvertPostListToPostDtoList(posts);
 
             Assert.NotNull(result);
             Assert.Equal(expectedPosts.Count(), result.Count());
@@ -55,7 +55,7 @@ namespace Test.Services.Posts
         }
 
         [Fact]
-        public async Task GetAllPosts_WhenNoPostsExist_ShouldReturnNoPostsFoundException()
+        public async Task GetAllPosts_WhenNoPostsExist_ShouldThrowsNoPostsFoundException()
         {
             int userId = 1;
 
@@ -67,7 +67,39 @@ namespace Test.Services.Posts
             Assert.Equal(3006, exception.Code);
         }
 
-        private static IEnumerable<PostDto> ConvertPostToPostDto(List<Post> posts)
+        [Fact]
+        public async Task GetPostById_WhenPostsExists_ShouldReturnsPost()
+        {
+            int userId = 1;
+
+            var post = PostMocks.ValidPost();
+
+            _postRepository.Setup(r => r.GetPostById(userId, post.Id))
+                .ReturnsAsync(post);
+
+            var result = await _postService.GetPostById(userId, post.Id);
+
+            PostDto expectedPost = ConvertPostToPostDto(post);
+
+            Assert.NotNull(result);
+            Assert.Equal(expectedPost.Id, result.Id);
+            Assert.Equal(expectedPost.ImageUrl, result.ImageUrl);
+            Assert.Equal(expectedPost.Caption, result.Caption);
+            Assert.Equal(expectedPost.CreatedAt, result.CreatedAt);
+        }
+
+        private static PostDto ConvertPostToPostDto(Post post)
+        {
+            return new PostDto
+            {
+                Id = post.Id,
+                ImageUrl = post.ImageUrl,
+                Caption = post.Caption,
+                CreatedAt = post.CreatedAt,
+            };
+        }
+
+        private static IEnumerable<PostDto> ConvertPostListToPostDtoList(List<Post> posts)
         {
             return posts.Select(p => new PostDto
             {
