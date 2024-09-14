@@ -2,6 +2,8 @@
 using Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Test.Mocks;
+using Xunit;
 
 namespace Test.Services.Profiles
 {
@@ -24,6 +26,31 @@ namespace Test.Services.Profiles
                 _profileRepository.Object,
                 _logger.Object
                 );
+        }
+
+        [Fact]
+        public async Task GetProfile_WhenProfileExists_ShouldReturnsProfile()
+        {
+            int userId = 1;
+
+            var profile = ProfileMocks.ValidUser();
+
+            _profileRepository.Setup(r => r.GetProfile(userId))
+                .ReturnsAsync(profile);
+
+            var result = await _profileService.GetProfile(userId);
+
+            Assert.NotNull(result);
+            Assert.Equal(profile.Id, result.Id);
+            Assert.Equal(profile.ImageUrl, result.ImageUrl);
+            Assert.Equal(profile.Username, result.Username);
+            Assert.Equal(profile.Password, result.Password);
+            Assert.Equal(profile.Bio, result.Bio);
+            Assert.Equal(profile.PhoneNumber, result.PhoneNumber);
+            Assert.Equal(profile.DateOfBirth, result.DateOfBirth);
+            Assert.Equal(profile.FirstName, result.FirstName);
+            Assert.Equal(profile.LastName, result.LastName);
+            Assert.Equal(profile.Email, result.Email);
         }
 
     }
