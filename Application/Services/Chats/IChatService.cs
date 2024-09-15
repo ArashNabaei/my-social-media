@@ -13,6 +13,6 @@ namespace Application.Services.Chats
 
         Task UpdateMessage(int userId, int messageId, string message);
 
-        Task<UserDto?> SearchUserByName(string pattern);
+        Task<UserDto?> SearchUserByName(int userId, string pattern);
     }
 }
