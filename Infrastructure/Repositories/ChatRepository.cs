@@ -98,7 +98,7 @@ namespace Infrastructure.Repositories
         public async Task<IEnumerable<User?>> SearchUserByName(int userId, string pattern)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("pattern", pattern);
+            parameters.Add("pattern", $"%{pattern}%");
 
             var query = "SELECT u.Id, " +
                 "u.FirstName, " +
@@ -106,8 +106,8 @@ namespace Infrastructure.Repositories
                 "u.Bio, " +
                 "u.ImageUrl " +
                 "FROM Users u " +
-                "WHERE FirstName LIKE '%@pattern%' " +
-                "OR LastName LIKE '%@pattern%'";
+                "WHERE u.FirstName LIKE @pattern " +
+                "OR u.LastName LIKE @pattern";
 
             var users = await _dapperContext.Connection.QueryAsync<User>(query, parameters);
 
