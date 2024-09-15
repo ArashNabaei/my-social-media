@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Dtos;
+using Domain.Entities;
 
 namespace Application.Services.Chats
 {
@@ -11,5 +12,7 @@ namespace Application.Services.Chats
         Task DeleteMessage(int userId, int messageId);
 
         Task UpdateMessage(int userId, int messageId, string message);
+
+        Task<UserDto?> SearchUserByName(string pattern);
     }
 }
