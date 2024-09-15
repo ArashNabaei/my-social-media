@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Dtos;
+using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using Shared.Exceptions.Chats;
@@ -71,6 +72,36 @@ namespace Application.Services.Chats
             await _chatRepository.UpdateMessage(userId, messageId, message);
 
             _logger.LogInformation($"User with id {userId} updated message with id {messageId}.");
+        }
+
+        public async Task<UserDto?> SearchUserByName(int userId, string pattern)
+        {
+            var user = await _chatRepository.SearchUserByName(userId, pattern);
+
+            if (user == null)
+            {
+                _logger.LogError($"User with id {userId} tried to access non-existent user with name like {pattern}.");
+
+                throw ChatException.UserNotFound();
+            }
+
+            var userDto = ConvertUserToUserDto(user);
+
+            _logger.LogInformation($"User with id {userId} searched user with name like {pattern}");
+
+            return userDto;
+        }
+
+        private static UserDto ConvertUserToUserDto(User? user)
+        {
+            return new UserDto
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Bio = user.Bio,
+                ImageUrl = user.ImageUrl,
+            };
         }
 
     }

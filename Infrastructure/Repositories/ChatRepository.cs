@@ -95,7 +95,7 @@ namespace Infrastructure.Repositories
             return message;
         }
 
-        public async Task<User?> SearchUserByName(string pattern)
+        public async Task<User?> SearchUserByName(int userId, string pattern)
         {
             var parameters = new DynamicParameters();
             parameters.Add("pattern", pattern);
