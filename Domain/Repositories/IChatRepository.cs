@@ -14,6 +14,6 @@ namespace Domain.Repositories
 
         Task UpdateMessage(int userId, int messageId, string message);
 
-        Task<User> SearchUserByName(int userId, string username);
+        Task<User?> SearchUserByName(string pattern);
     }
 }
