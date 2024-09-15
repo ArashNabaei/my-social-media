@@ -52,9 +52,9 @@ namespace my_social_media.Controllers
         [HttpGet("SearchUserByName")]
         public async Task<IActionResult> SearchUserByName([FromBody] string pattern)
         {
-            var user = await _chatService.SearchUserByName(UserId, pattern);
+            var users = await _chatService.SearchUserByName(UserId, pattern);
 
-            return Ok(user);
+            return Ok(users);
         }
 
     }
