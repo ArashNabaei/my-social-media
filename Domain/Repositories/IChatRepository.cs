@@ -13,5 +13,7 @@ namespace Domain.Repositories
         Task DeleteMessage(int userId, int messageId);
 
         Task UpdateMessage(int userId, int messageId, string message);
+
+        Task<IEnumerable<User?>> SearchUserByName(int userId, string pattern);
     }
 }

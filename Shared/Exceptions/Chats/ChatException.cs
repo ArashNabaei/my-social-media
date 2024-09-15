@@ -18,5 +18,10 @@
             return new ChatException(4002, "No messages found in this chat.");
         }
 
+        public static ChatException UserNotFound()
+        {
+            return new ChatException(4003, "No user was found.");
+        }
+
     }
 }

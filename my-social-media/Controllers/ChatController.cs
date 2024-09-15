@@ -49,5 +49,13 @@ namespace my_social_media.Controllers
             return Ok("Message updated successfully.");
         }
 
+        [HttpGet("SearchUserByName")]
+        public async Task<IActionResult> SearchUserByName(string pattern)
+        {
+            var users = await _chatService.SearchUserByName(UserId, pattern);
+
+            return Ok(users);
+        }
+
     }
 }

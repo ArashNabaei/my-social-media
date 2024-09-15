@@ -95,5 +95,24 @@ namespace Infrastructure.Repositories
             return message;
         }
 
+        public async Task<IEnumerable<User?>> SearchUserByName(int userId, string pattern)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("pattern", $"%{pattern}%");
+
+            var query = "SELECT u.Id, " +
+                "u.FirstName, " +
+                "u.LastName, " +
+                "u.Bio, " +
+                "u.ImageUrl " +
+                "FROM Users u " +
+                "WHERE u.FirstName LIKE @pattern " +
+                "OR u.LastName LIKE @pattern";
+
+            var users = await _dapperContext.Connection.QueryAsync<User>(query, parameters);
+
+            return users;
+        }
+
     }
 }
