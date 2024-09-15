@@ -95,7 +95,7 @@ namespace Infrastructure.Repositories
             return message;
         }
 
-        public async Task<User?> SearchUserByName(int userId, string pattern)
+        public async Task<IEnumerable<User?>> SearchUserByName(int userId, string pattern)
         {
             var parameters = new DynamicParameters();
             parameters.Add("pattern", pattern);
@@ -109,10 +109,9 @@ namespace Infrastructure.Repositories
                 "WHERE FirstName LIKE '%@pattern%' " +
                 "OR LastName LIKE '%@pattern%'";
 
-            var user = await _dapperContext.Connection.QueryFirstOrDefaultAsync<User>(query, parameters);
+            var users = await _dapperContext.Connection.QueryAsync<User>(query, parameters);
 
-            return user;
-
+            return users;
         }
 
     }
