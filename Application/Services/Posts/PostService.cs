@@ -86,7 +86,6 @@ namespace Application.Services.Posts
             _logger.LogInformation($"User with id {userId} created new post.");
         }
 
-
         public async Task DeletePost(int userId, int postId)
         {
             var post = await GetPostById(userId, postId);
@@ -209,6 +208,15 @@ namespace Application.Services.Posts
             _logger.LogInformation($"User with id {userId} saw all comments of post with id {postId}.");
 
             return comments;
+        }
+
+        public async Task ReportPost(int userId, int postId, string message)
+        {
+            _logger.LogInformation($"User with id {userId}" +
+                $" reported post with id {postId}" +
+                $" with this message {message}");
+
+            await _postRepository.ReportPost(userId, postId, message);
         }
 
     }
