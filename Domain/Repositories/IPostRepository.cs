@@ -25,5 +25,7 @@ namespace Domain.Repositories
         Task LeaveCommentOnPost(int userId, int postId, string comment);
 
         Task<IEnumerable<Comment>?> GetCommentsOfPost(int userId, int postId);
+
+        Task ReportPost(int userId, int postId, string message);
     }
 }
