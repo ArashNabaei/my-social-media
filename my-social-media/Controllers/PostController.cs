@@ -98,5 +98,13 @@ namespace my_social_media.Controllers
             return Ok(comments);
         }
 
+        [HttpPost("ReportPost")]
+        public async Task<IActionResult> ReportPost(int postId, [FromBody] string message)
+        {
+            await _postService.ReportPost(UserId, postId, message);
+
+            return Ok("Post reported successfully");
+        }
+
     }
 }

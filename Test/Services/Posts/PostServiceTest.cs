@@ -286,6 +286,23 @@ namespace Test.Services.Posts
             Assert.Equal(3003, exception.Code);
         }
 
+        [Fact]
+        public async Task ReportPost_WhenPostExists_ShouldBeCalledOnce()
+        {
+            int userId = 1;
+            int postId = 1;
+            string message = "report";
+
+            var post = PostMocks.ValidPost();
+
+            _postRepository.Setup(r => r.GetPostById(postId))
+                .ReturnsAsync(post);
+
+            await _postService.ReportPost(userId, postId, message);
+
+            _postRepository.Verify(r =>  r.ReportPost(userId, postId, message), Times.Once);
+        }
+
         private static PostDto ConvertPostToPostDto(Post post)
         {
             return new PostDto
