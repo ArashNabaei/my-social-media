@@ -212,6 +212,15 @@ namespace Application.Services.Posts
 
         public async Task ReportPost(int userId, int postId, string message)
         {
+            var post = await _postRepository.GetPostById(postId);
+
+            if (post == null)
+            {
+                _logger.LogError($"User with id {userId} tried to access a non-existent post.");
+
+                throw PostException.PostNotFound();
+            }
+
             _logger.LogInformation($"User with id {userId}" +
                 $" reported post with id {postId}" +
                 $" with this message {message}");
