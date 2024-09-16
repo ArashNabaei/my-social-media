@@ -219,6 +219,23 @@ namespace Infrastructure.Repositories
             return comments;
         }
 
+        public async Task<Post?> GetPostById(int postId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("postId", postId);
+
+            var query = "SELECT Id, " +
+                "ImageUrl, " +
+                "Caption, " +
+                "CreatedAt " +
+                "FROM Posts " +
+                "WHERE Id = @postId";
+
+            var post = await _dapperContext.Connection.QueryFirstOrDefaultAsync<Post>(query, parameters);
+
+            return post;
+        }
+
         public async Task ReportPost(int userId, int postId, string message)
         {
             var createdAt = DateTime.UtcNow;
@@ -229,7 +246,7 @@ namespace Infrastructure.Repositories
             parameters.Add("message", message);
             parameters.Add("createdAt", createdAt);
 
-            var query = "INSERT INTO Reports (Id, PostId, UserId, Message, CreatedAt) " +
+            var query = "INSERT INTO Reports (PostId, UserId, Message, CreatedAt) " +
                 "VALUES (@postId, @userId, @message, @createdAt)";
 
             await _dapperContext.Connection.ExecuteAsync(query, parameters);

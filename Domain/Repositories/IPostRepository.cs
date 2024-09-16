@@ -27,5 +27,7 @@ namespace Domain.Repositories
         Task<IEnumerable<Comment>?> GetCommentsOfPost(int userId, int postId);
 
         Task ReportPost(int userId, int postId, string message);
+
+        Task<Post?> GetPostById(int postId);
     }
 }
