@@ -219,5 +219,21 @@ namespace Infrastructure.Repositories
             return comments;
         }
 
+        public async Task ReportPost(int userId, int postId, string message)
+        {
+            var createdAt = DateTime.UtcNow;
+
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("postId", postId);
+            parameters.Add("message", message);
+            parameters.Add("createdAt", createdAt);
+
+            var query = "INSERT INTO Reports (Id, PostId, UserId, Message, CreatedAt) " +
+                "VALUES (@postId, @userId, @message, @createdAt)";
+
+            await _dapperContext.Connection.ExecuteAsync(query, parameters);
+        }
+
     }
 }
