@@ -1,4 +1,5 @@
-﻿using Application.Features.Query.Profiles;
+﻿using Application.Features.Command.Profiles;
+using Application.Features.Query.Profiles;
 using Application.Services.Profiles;
 using Domain.Entities;
 using MediatR;
@@ -12,13 +13,11 @@ namespace my_social_media.Controllers
     [Authorize]
     public class ProfileController : BaseController
     {
-        private readonly IProfileService _profileService;
 
         private readonly ISender _sender;
 
-        public ProfileController(IProfileService profileService, ISender sender)
+        public ProfileController(ISender sender)
         {
-            _profileService = profileService;
             _sender = sender;
         }
 
@@ -33,7 +32,7 @@ namespace my_social_media.Controllers
         [HttpPut("Profile")]
         public async Task<IActionResult> UpdateProfile([FromBody] User user)
         {
-            await _profileService.UpdateProfile(UserId, user);
+            await _sender.Send(new UpdateProfileCommand(UserId, user));
 
             return Ok();
         }
