@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Features.Command.Profiles
 {
-    public record UpdateProfileCommand(int Id, User user) : IRequest
+    public record UpdateProfileCommand(int Id, User User) : IRequest
     {
     }
 }
