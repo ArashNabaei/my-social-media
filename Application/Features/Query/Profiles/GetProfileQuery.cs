@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Domain.Entities;
+using MediatR;
 
 namespace Application.Features.Query.Profiles
 {
@@ -6,7 +7,7 @@ namespace Application.Features.Query.Profiles
         string LastName, string Username, 
         string Password, string Bio, 
         string Email, string PhoneNumber, 
-        string ImageUrl, DateTime DateOfBirth) : IRequest
+        string ImageUrl, DateTime DateOfBirth) : IRequest<User>
     {
     }
 }
