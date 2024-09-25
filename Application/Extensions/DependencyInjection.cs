@@ -1,4 +1,5 @@
-﻿using Application.Services.Accounts;
+﻿using Application.Features.Query.Profiles;
+using Application.Services.Accounts;
 using Application.Services.Chats;
 using Application.Services.Follows;
 using Application.Services.Posts;
@@ -8,6 +9,7 @@ using Infrastructure;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Application.Extensions
 {
@@ -20,6 +22,10 @@ namespace Application.Extensions
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IFollowService, FollowService>();
             services.AddScoped<IChatService, ChatService>();
+
+            services.AddMediatR(cfg => {
+                cfg.RegisterServicesFromAssembly(Assembly.GetAssembly(typeof(GetProfileQuery)));
+            });
 
             return services;
         }

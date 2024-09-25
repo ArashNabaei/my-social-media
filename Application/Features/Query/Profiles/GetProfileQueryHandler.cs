@@ -20,5 +20,6 @@ namespace Application.Features.Query.Profiles
 
             return result;
         }
+
     }
 }

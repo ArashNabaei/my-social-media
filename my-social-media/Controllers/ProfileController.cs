@@ -1,5 +1,7 @@
-﻿using Application.Services.Profiles;
+﻿using Application.Features.Query.Profiles;
+using Application.Services.Profiles;
 using Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,15 +14,18 @@ namespace my_social_media.Controllers
     {
         private readonly IProfileService _profileService;
 
-        public ProfileController(IProfileService profileService)
+        private readonly ISender _sender;
+
+        public ProfileController(IProfileService profileService, ISender sender)
         {
             _profileService = profileService;
+            _sender = sender;
         }
 
         [HttpGet("Profile")]
         public async Task<IActionResult> GetProfile()
         {
-            var profile = await _profileService.GetProfile(UserId);
+            var profile = await _sender.Send(new GetProfileQuery(UserId));
 
             return Ok(new { Profile = profile});
         }
