@@ -57,7 +57,7 @@ namespace my_social_media.Controllers
         [HttpGet("SearchUserByName")]
         public async Task<IActionResult> SearchUserByName(string pattern)
         {
-            var users = await _chatService.SearchUserByName(UserId, pattern);
+            var users = await _sender.Send(new SearchUserByNameQuery(UserId, pattern));
 
             return Ok(users);
         }
