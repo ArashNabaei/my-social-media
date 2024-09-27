@@ -1,4 +1,6 @@
-﻿using Application.Services.Chats;
+﻿using Application.Features.Query.Chats;
+using Application.Services.Chats;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,9 +14,12 @@ namespace my_social_media.Controllers
     {
         private readonly IChatService _chatService;
 
-        public ChatController(IChatService chatService)
+        private readonly ISender _sender;
+
+        public ChatController(IChatService chatService, ISender sender)
         {
             _chatService = chatService;
+            _sender = sender;
         }
 
         [HttpPost("SendMessage")]
@@ -28,7 +33,7 @@ namespace my_social_media.Controllers
         [HttpGet("GetAllMessages")]
         public async Task<IActionResult> GetAllMessages(int id)
         {
-            var messages = await _chatService.GetAllMessages(UserId, id);
+            var messages = await _sender.Send(new GetAllMessagesQuery(UserId, id));
 
             return Ok(messages);
         }
