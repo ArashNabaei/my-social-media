@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Features.Query.Chats
 {
-    public record GetAllMessagesQuery : IRequest<IEnumerable<Message>>
+    public record GetAllMessagesQuery(int UserId, int ChatId) : IRequest<IEnumerable<Message>>
     {
     }
 }
